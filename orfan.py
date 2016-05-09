@@ -20,10 +20,10 @@ except ImportError:
     missing_modules['htmlgen'] = "needed for html generation"
 
 if len(missing_modules)>0: 
-    print_error("Error: Missing python modules:")
+    print("Error: Missing python modules:")
     for k,v in missing_modules.items():
-        print_error("    {:20s} {}".format(k,v))    
-    print_info("    To install run: 'pip3 install {}'".format(" ".join(missing_modules.keys())))
+        print("    {:20s} {}".format(k,v))    
+    print("    To install run: 'pip3 install {}'".format(" ".join(missing_modules.keys())))
     exit()
 
 
