@@ -14,6 +14,7 @@ def ParseCollection(info):
     div.append(createFileElements(info))
     div.append(createThumbnailElements(info))
     div.append(createSoftwareElements(info))
+    div.append(createCitationElements(info))
 
     return div
 
@@ -138,6 +139,50 @@ def createSoftwareElements(info):
         d.append(urlDiv)
 
         div.append(d)
+
+    return div
+
+def createCitationElements(info):
+    div = Division()
+    div.add_css_classes('dataset-citations')
+
+    citations = info['citations']
+    for citation in citations:
+        type = citation['type']
+        payload = citation['payload']
+
+        d = {
+          'plain': createPlainCitationElement,
+          'DOI': createDOICitationElement,
+          'BibTex': createBibTexCitationElement
+        }[type](payload)
+
+        div.append(d)
+
+    return div
+
+####################################################################################
+####################################################################################
+####################################################################################
+
+def createPlainCitationElement(payload):
+    div = Division()
+    div.add_css_classes('dataset-citation-plain')
+    div.append(payload)
+
+    return div
+
+def createDOICitationElement(payload):
+    div = Division()
+    div.add_css_classes('dataset-citation-doi')
+    div.append(payload)
+
+    return div
+
+def createBibTexCitationElement(payload):
+    div = Division()
+    div.add_css_classes('dataset-citation-bibtex')
+    div.append(payload)
 
     return div
 
