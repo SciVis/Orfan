@@ -2,9 +2,9 @@ import os
 import json
 
 
-def scrape(paths):
+def scrape(path):
     result = {}
-    for root, dirs, files in os.walk(".", topdown=True, onerror=None, followlinks=True):
+    for root, dirs, files in os.walk(path, topdown=True, onerror=None, followlinks=True):
         if "meta.json" in files:
             metafile = os.path.join(root, "meta.json")
             if os.path.exists(metafile):
