@@ -35,8 +35,8 @@ import orfan.javascripts
 
 def mkdir(*path):
     res = os.path.join(*path) 
-    shutil.rmtree(res)
-    os.mkdir(res)
+    if not os.path.isdir(res):
+        os.mkdir(res)
     return res
 
 if __name__ == '__main__':
@@ -66,6 +66,7 @@ if __name__ == '__main__':
 
     html, thumbnails = orfan.generator.generate(meta, software, files)
 
+    if os.path.isdir(args.dest): shutil.rmtree(args.dest)
     outputDir = mkdir(args.dest)
 
     with open(os.path.join(outputDir, files.html), 'w') as f:
