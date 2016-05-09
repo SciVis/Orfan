@@ -31,6 +31,7 @@ if len(missing_modules)>0:
 import orfan.scraper
 import orfan.generator
 import orfan.style
+import orfan.javascripts
 
 def mkdir(*path):
     res = os.path.join(*path) 
@@ -48,6 +49,7 @@ if __name__ == '__main__':
         css = "orfan.css"
         html = "orfan.html"
         software = "software.json"
+        scripts = ["jquery-2.2.3.min.js", "list-1.2.0.min.js"]
 
     files = ConfigFiles()
 
@@ -62,7 +64,7 @@ if __name__ == '__main__':
     with open(os.path.join(args.path, files.software)) as f:
         software = json.load(f)
 
-    html, thumbnails = orfan.generator.generate(meta, software)
+    html, thumbnails = orfan.generator.generate(meta, software, files)
 
     outputDir = mkdir(args.dest)
 
@@ -73,3 +75,4 @@ if __name__ == '__main__':
         shutil.copyfile(thumbnail, os.path.join(outputDir, thumbnail))
 
     orfan.style.writeCSS(os.path.join(outputDir, files.css))
+    orfan.javascripts.writeScripts(outputDir, files.scripts)

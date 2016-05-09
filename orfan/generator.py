@@ -202,16 +202,32 @@ def createBibTexCitationElement(payload):
 ####################################################################################
 ####################################################################################
 
-def generate(meta, software):
+def generate(meta, software, files):
     doc = Document()
 
     thumbnails = []
+
+    doc.title = "Orfan"
+
+    doc.add_stylesheet(files.css)
+    doc.add_scripts(*files.scripts)
+
+    header = Division()
+    doc.append_body(header)
+
+    datasets = Division()
+    datasets.add_css_classes("datasets")
 
     for key, value in meta.items():
         value['path'] = key
         value['allSoftwares'] = software
         d = parseCollection(value)
-        doc.append_body(d)
+        datasets.append(d)
         thumbnails.extend(gatherThumbnails(value))
+
+    doc.append_body(datasets)
+
+    footer = Division()
+    doc.append_body(footer)
 
     return doc, thumbnails
