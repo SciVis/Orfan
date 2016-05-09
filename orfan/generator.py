@@ -5,16 +5,17 @@ def ParseCollection(info):
     div = Division()
     div.add_css_classes('dataset')
 
-    div.append(createPlainElement('path', info))
-    div.append(createPlainElement('name', info))
-    div.append(createPlainElement('license', info))
-    div.append(createPlainElement('description', info))
-    div.append(createPlainElement('acknowledgements', info))
+    div.append(createTextElement('path', info))
+    div.append(createTextElement('name', info))
+    div.append(createTextElement('license', info))
+    div.append(createTextElement('description', info))
+    div.append(createTextElement('acknowledgements', info))
     div.append(createTagElements(info))
     div.append(createFileElements(info))
     div.append(createThumbnailElements(info))
     div.append(createSoftwareElements(info))
     div.append(createCitationElements(info))
+    div.append(createTextElement('notes', info))
 
     return div
 
@@ -22,7 +23,7 @@ def ParseCollection(info):
 ####################################################################################
 ####################################################################################
 
-def createPlainElement(type, info):
+def createTextElement(type, info):
     div = Division()
     div.add_css_classes('dataset-' + type)
 
