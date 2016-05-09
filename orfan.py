@@ -2,6 +2,7 @@ import argparse
 import json
 import orfan.scraper
 import orfan.generator
+import os
 
 
 if __name__ == '__main__':
@@ -13,8 +14,15 @@ if __name__ == '__main__':
                         help='Path to data storage')
 
     args = parser.parse_args()
+
+    if args.path == None:
+        args.path = "./Example"
+
     meta = orfan.scraper.scrape(args.path)
-    html = orfan.generator.generate(meta)
+
+    with open(os.path.join(args.path, 'software.json')) as f:
+        software = json.load(f)
+    html = orfan.generator.generate(meta, software)
 
     with open('/Users/alex/Desktop/test.html', 'w') as f:
         f.write(str(html))

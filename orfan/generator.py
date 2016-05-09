@@ -13,8 +13,13 @@ def ParseCollection(info):
     div.append(createTagElements(info))
     div.append(createFileElements(info))
     div.append(createThumbnailElements(info))
+    div.append(createSoftwareElements(info))
 
     return div
+
+####################################################################################
+####################################################################################
+####################################################################################
 
 def createPlainElement(type, info):
     div = Division()
@@ -105,11 +110,47 @@ def createThumbnailElements(info):
 
     return div
 
-def generate(meta):
+def createSoftwareElements(info):
+    div = Division()
+    div.add_css_classes('dataset-softwares')
+
+    softwares = info['software']
+    for software in softwares:
+        d = Division()
+        d.add_css_classes('dataset-software')
+
+        allSoftwares = info['allSoftwares']
+
+        s = allSoftwares[software]
+
+        # Name
+        nameDiv = Division()
+        nameDiv.add_css_classes('dataset-software-name')
+
+        nameDiv.append(s['name'])
+        d.append(nameDiv)
+
+        # URL
+        urlDiv = Division()
+        urlDiv.add_css_classes('dataset-software-url')
+
+        urlDiv.append(s['url'])
+        d.append(urlDiv)
+
+        div.append(d)
+
+    return div
+
+####################################################################################
+####################################################################################
+####################################################################################
+
+def generate(meta, software):
     doc = Document()
 
     for key, value in meta.items():
         value['path'] = key
+        value['allSoftwares'] = software
         d = ParseCollection(value)
         doc.append_body(d)
 
