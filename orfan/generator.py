@@ -1,6 +1,6 @@
 import json
 import os
-from htmlgen import Document, Division, Image
+from htmlgen import Document, Division, Image, UnorderedList, ListItem, Input, Button, Script
 
 def parseCollection(info):
     div = Division()
@@ -216,18 +216,35 @@ def generate(meta, software, files):
     doc.append_body(header)
 
     datasets = Division()
-    datasets.add_css_classes("datasets")
+    datasets.add_css_classes('datasets')
+    datasets.id = 'datasets'
+
+    search = Input("text", "Search")
+    search.add_css_classes("search")
+    datasets.append(search)
+
+    button = Button("Sort by name")
+    button.set_attribute("data-sort", "dataset-name")
+    button.add_css_classes("sort")
+    datasets.append(button)
+
+    datasetlist = UnorderedList()
+    datasetlist.add_css_classes('list')
+
+    datasets.append(datasetlist)
 
     for key, value in meta.items():
         value['path'] = key
         value['allSoftwares'] = software
         d = parseCollection(value)
-        datasets.append(d)
+        datasetlist.append(ListItem(d))
         thumbnails.extend(gatherThumbnails(value))
 
     doc.append_body(datasets)
 
     footer = Division()
     doc.append_body(footer)
+
+    doc.append_body(Script(url=files.mainjs))
 
     return doc, thumbnails

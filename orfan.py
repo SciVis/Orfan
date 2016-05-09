@@ -50,6 +50,7 @@ if __name__ == '__main__':
         html = "orfan.html"
         software = "software.json"
         scripts = ["jquery-2.2.3.min.js", "list-1.2.0.min.js"]
+        mainjs = "main.js"
 
     files = ConfigFiles()
 
@@ -66,14 +67,16 @@ if __name__ == '__main__':
 
     html, thumbnails = orfan.generator.generate(meta, software, files)
 
-    if os.path.isdir(args.dest): shutil.rmtree(args.dest)
+    #if os.path.isdir(args.dest): shutil.rmtree(args.dest)
     outputDir = mkdir(args.dest)
 
     with open(os.path.join(outputDir, files.html), 'w') as f:
         f.write(str(html))
     for thumbnail in thumbnails:
-        os.makedirs(os.path.dirname(os.path.join(outputDir, thumbnail)))
+        os.makedirs(os.path.dirname(os.path.join(outputDir, thumbnail)),  exist_ok=True)
         shutil.copyfile(thumbnail, os.path.join(outputDir, thumbnail))
 
     orfan.style.writeCSS(os.path.join(outputDir, files.css))
-    orfan.javascripts.writeScripts(outputDir, files.scripts)
+    for script in files.scripts:
+        orfan.javascripts.writeScript(outputDir, script)
+    orfan.javascripts.writeScript(outputDir, files.mainjs)
