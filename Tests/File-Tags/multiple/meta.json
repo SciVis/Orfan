@@ -9,6 +9,6 @@
       "name": "full_name1",
       "description": "full_description1",
       "tags": [ "full_name1-tag1", "full_name1-tag2", "full_name1-tag3", "full_name1-tag4", "full_name1-tag5", "full_name1-tag6", "full_name1-tag7", "full_name1-tag8", "full_name1-tag9", "full_name1-tag10" ]
-    },
+    }
   ]
 }

@@ -7,17 +7,17 @@
   "files": [
     {
       "name": "citations_doi_name1",
-      "description": "citations_doi_description1",
+      "description": "citations_doi_description1"
     },
     {
       "name": "citations_doi_name2",
-      "description": "citations_doi_description2",
+      "description": "citations_doi_description2"
     }
   ],
   "citations": [
     {
       "type": "DOI",
       "payload": "citations_doi_doi:10.1594/PANGAEA.726855"
-    },
-  ],
+    }
+  ]
 }

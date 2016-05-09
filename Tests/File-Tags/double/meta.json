@@ -9,6 +9,6 @@
       "name": "filetags_double_name1",
       "description": "filetags_double_description1",
       "tags": [ "filetags_double_name1-tag1", "filetags_double-tag2" ]
-    },
+    }
   ]
 }

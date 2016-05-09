@@ -7,11 +7,11 @@
   "files": [
     {
       "name": "citations_plaindoi_name1",
-      "description": "citations_plaindoi_description1",
+      "description": "citations_plaindoi_description1"
     },
     {
       "name": "citations_plaindoi_name2",
-      "description": "citations_plaindoi_description2",
+      "description": "citations_plaindoi_description2"
     }
   ],
   "citations": [
@@ -22,6 +22,6 @@
     {
       "type": "DOI",
       "payload": "citations_plaindoi_doi:10.1594/PANGAEA.726855"
-    },
-  ],
+    }
+  ]
 }

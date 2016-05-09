@@ -7,11 +7,11 @@
   "files": [
     {
       "name": "minimal_name1",
-      "description": "minimal_description1",
+      "description": "minimal_description1"
     },
     {
       "name": "minimal_name2",
-      "description": "minimal_description2",
+      "description": "minimal_description2"
     }
-  ],
+  ]
 }

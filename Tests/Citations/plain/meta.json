@@ -7,17 +7,17 @@
   "files": [
     {
       "name": "citations_plain_name1",
-      "description": "citations_plain_description1",
+      "description": "citations_plain_description1"
     },
     {
       "name": "citations_plain_name2",
-      "description": "citations_plain_description2",
+      "description": "citations_plain_description2"
     }
   ],
   "citations": [
     {
       "type": "plain",
       "payload": "citations_plain_Foo et al., Foo and Bars in Foobars, 1845"
-    },
-  ],
+    }
+  ]
 }

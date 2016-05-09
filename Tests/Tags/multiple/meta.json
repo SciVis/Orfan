@@ -6,8 +6,8 @@
   "tags": [ "tags_multiple_tag1", "tags_multiple_tag2", "tags_multiple_tag3", "tags_multiple_tag4", "tags_multiple_tag5", "tags_multiple_tag6", "tags_multiple_tag7", "tags_multiple_tag8", "tags_multiple_tag19" ],
   "files": [
     {
-      "name": "full_name1",
-      "description": "full_description1"
-    },
+      "name": "tags_multiple_name1",
+      "description": "tags_multiple_description1"
+    }
   ]
 }
