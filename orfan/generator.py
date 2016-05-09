@@ -9,14 +9,20 @@ def parseCollection(info):
     div.append(createTextElement('path', info))
     div.append(createTextElement('name', info))
     div.append(createTextElement('license', info))
-    div.append(createTextElement('description', info))
-    div.append(createTextElement('acknowledgements', info))
+    if 'description' in info:
+        div.append(createTextElement('description', info))
+    if 'acknowledgements' in info:
+        div.append(createTextElement('acknowledgements', info))
     div.append(createTagElements(info))
     div.append(createFileElements(info))
-    div.append(createThumbnailElements(info))
-    div.append(createSoftwareElements(info))
-    div.append(createCitationElements(info))
-    div.append(createTextElement('notes', info))
+    if 'thumbnails' in info:
+        div.append(createThumbnailElements(info))
+    if 'software' in info:
+        div.append(createSoftwareElements(info))
+    if 'citation' in info:
+        div.append(createCitationElements(info))
+    if 'notes' in info:
+        div.append(createTextElement('notes', info))
 
     return div
 
@@ -77,16 +83,18 @@ def createFileElements(info):
         d.append(descDiv)
 
         # Format
-        formatDiv = Division()
-        formatDiv.add_css_classes('dataset-file-format')
-        formatDiv.append(file['format'])
-        d.append(formatDiv)
+        if 'format' in file:
+            formatDiv = Division()
+            formatDiv.add_css_classes('dataset-file-format')
+            formatDiv.append(file['format'])
+            d.append(formatDiv)
 
         # Resolution
-        resolutionDiv = Division()
-        resolutionDiv.add_css_classes('dataset-file-resolution')
-        resolutionDiv.append(str(file['resolution']))
-        d.append(resolutionDiv)
+        if 'resolution' in file:
+            resolutionDiv = Division()
+            resolutionDiv.add_css_classes('dataset-file-resolution')
+            resolutionDiv.append(str(file['resolution']))
+            d.append(resolutionDiv)
 
         div.append(d)
 
@@ -238,7 +246,8 @@ def generate(meta, software, files):
         value['allSoftwares'] = software
         d = parseCollection(value)
         datasetlist.append(ListItem(d))
-        thumbnails.extend(gatherThumbnails(value))
+        if 'thumbnails' in value:
+            thumbnails.extend(gatherThumbnails(value))
 
     doc.append_body(datasets)
 
