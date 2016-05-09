@@ -1,30 +1,24 @@
 {
-  "name": "Boron charge density",
+  "name": "Hydrogen charge density",
   "origin": "Peter Steneteg",
   "license": "Free",
   "contact": "Peter Steneteg peter.steneteg@liu.se",
-  "tags": [ "volume", "charge density", "boron" ],
+  "tags": [ "volume", "charge density", "hydrogen" ],
   "files": [
     {
-      "name": "alpha-boron.*",
-      "description": "alpha phase",
-      "format": "Inviwo dat",
-      "resolution": [ 128, 128, 128 ]
-    },
-    {
-      "name": "gamma-boron.*",
-      "description": "gamma phase",
+      "name": "hydrogenatom.*",
+      "description": "Hydogen charge density",
       "format": "Inviwo dat",
       "resolution": [ 128, 128, 128 ]
     }
   ],
-  "tumbnails": [
+  "thumbnails": [
     {
-      "name": "tumbnail.png",
-      "caption": "Boron chargedensity"
+      "name": "thumbnail.png",
+      "caption": "Hydrogen chargedensity"
     }
   ],
-  "description": "Boron change density",
+  "description": "Hydrogen change density",
   "acknowlagements": "",
   "software": [
     "Inviwo"

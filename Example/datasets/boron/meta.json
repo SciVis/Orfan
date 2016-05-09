@@ -18,9 +18,9 @@
       "resolution": [ 128, 128, 128 ]
     }
   ],
-  "tumbnails": [
+  "thumbnails": [
     {
-      "name": "tumbnail.png",
+      "name": "thumbnail.png",
       "caption": "Boron chargedensity"
     }
   ],
