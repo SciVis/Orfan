@@ -1,14 +1,9 @@
 import json
-from htmlgen import Document, Division
+from htmlgen import Document, Division, Image
 
 def ParseCollection(info):
     div = Division()
     div.add_css_classes('dataset')
-
-    Values = [
-        'path', 'name', 'license', 'contact',
-        'description', 'acknowledgements', 
-    ]
 
     div.append(createPlainElement('path', info))
     div.append(createPlainElement('name', info))
@@ -17,6 +12,7 @@ def ParseCollection(info):
     div.append(createPlainElement('acknowledgements', info))
     div.append(createTagElements(info))
     div.append(createFileElements(info))
+    div.append(createThumbnailElements(info))
 
     return div
 
@@ -79,11 +75,35 @@ def createFileElements(info):
 
     return div
 
-def createThumbnails(info):
+def createThumbnailElements(info):
     div = Division()
-    div.add_css_classes('dataset-files')
-    
+    div.add_css_classes('dataset-thumbnails')
 
+    thumbnails = info['thumbnails']
+
+    for thumbnail in thumbnails:
+        d = Division()
+        d.add_css_classes('dataset-thumbnail')
+
+        # Image
+        image = Image(thumbnail['name'], thumbnail['caption'])
+        d.append(image)
+
+        # Name
+        nameDiv = Division()
+        nameDiv.add_css_classes('dataset-thumbnail-name')
+        nameDiv.append(thumbnail['name'])
+        d.append(nameDiv);
+
+        # Caption
+        captionDiv = Division()
+        captionDiv.add_css_classes('dataset-thumbnail-caption')
+        captionDiv.append(thumbnail['caption'])
+        d.append(captionDiv)
+
+        div.append(d)
+
+    return div
 
 def generate(meta):
     doc = Document()
