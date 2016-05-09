@@ -1,0 +1,50 @@
+{
+  "name": "full_name",
+  "origin": "full_origin",
+  "license": "full_license",
+  "contact": "full_contact",
+  "tags": [ "full_tag1", "full_tag2", "full_tag3" ],
+  "files": [
+    {
+      "name": "full_name1",
+      "description": "full_description1",
+      "format": "full_format1",
+      "resolution": [ 1, 1, 1 ],
+      "tags": [ "full_name1-tag1", "full_name1-tag2" ]
+    },
+    {
+      "name": "full_name2",
+      "description": "full_description2",
+      "format": "full_format2",
+      "resolution": [ 2, 2, 2 ],
+      "tags": [ "full_name2-tag1", "full_name2-tag2" ]
+    }
+  ],
+  "thumbnails": [
+    {
+      "name": "thumbnail.png",
+      "caption": "full_name1 caption"
+    }
+  ],
+  "description": "full_description",
+  "acknowledgements": "full_acknowledgements",
+  "software": [
+    "Inviwo",
+    "OpenSpace"
+  ],
+  "citations": [
+    {
+      "type": "plain",
+      "payload": "full_Foo et al., Foo and Bars in Foobars, 1845"
+    },
+    {
+      "type": "DOI",
+      "payload": "full_doi:10.1594/PANGAEA.726855"
+    },
+    {
+      "type": "BibTex",
+      "payload": "full_@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}"
+    }
+  ],
+  "notes": "full_notes"
+}

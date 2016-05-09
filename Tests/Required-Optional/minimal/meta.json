@@ -1,0 +1,17 @@
+{
+  "name": "minimal_name",
+  "origin": "minimal_origin",
+  "license": "minimal_license",
+  "contact": "minimal_contact",
+  "tags": [ "minimal_tag1" ],
+  "files": [
+    {
+      "name": "minimal_name1",
+      "description": "minimal_description1",
+    },
+    {
+      "name": "minimal_name2",
+      "description": "minimal_description2",
+    }
+  ],
+}

@@ -1,0 +1,13 @@
+{
+  "name": "tags_single_name",
+  "origin": "tags_single_origin",
+  "license": "tags_single_license",
+  "contact": "tags_single_contact",
+  "tags": [ "tags_single_tag1" ],
+  "files": [
+    {
+      "name": "tags_single_name1",
+      "description": "full_description1",
+    },
+  ]
+}

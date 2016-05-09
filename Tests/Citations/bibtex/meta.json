@@ -1,0 +1,23 @@
+{
+  "name": "citations_bibtex_name",
+  "origin": "citations_bibtex_origin",
+  "license": "citations_bibtex_license",
+  "contact": "citations_bibtex_contact",
+  "tags": [ "citations_bibtex_tag1" ],
+  "files": [
+    {
+      "name": "citations_bibtex_name1",
+      "description": "citations_bibtex_description1",
+    },
+    {
+      "name": "full_name2",
+      "description": "full_description2",
+    }
+  ],
+  "citations": [
+    {
+      "type": "BibTex",
+      "payload": "citations_bibtex@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}"
+    }
+  ],
+}

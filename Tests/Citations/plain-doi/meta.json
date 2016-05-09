@@ -1,0 +1,27 @@
+{
+  "name": "citations_plaindoi_name",
+  "origin": "citations_plaindoi_origin",
+  "license": "citations_plaindoi_license",
+  "contact": "citations_plaindoi_contact",
+  "tags": [ "citations_plaindoi_tag1" ],
+  "files": [
+    {
+      "name": "citations_plaindoi_name1",
+      "description": "citations_plaindoi_description1",
+    },
+    {
+      "name": "citations_plaindoi_name2",
+      "description": "citations_plaindoi_description2",
+    }
+  ],
+  "citations": [
+    {
+      "type": "plain",
+      "payload": "citations_plaindoi_Foo et al., Foo and Bars in Foobars, 1845"
+    },
+    {
+      "type": "DOI",
+      "payload": "citations_plaindoi_doi:10.1594/PANGAEA.726855"
+    },
+  ],
+}

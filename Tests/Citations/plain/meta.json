@@ -1,0 +1,23 @@
+{
+  "name": "citations_plain_name",
+  "origin": "citations_plain_origin",
+  "license": "citations_plain_license",
+  "contact": "citations_plain_contact",
+  "tags": [ "citations_plain_tag1" ],
+  "files": [
+    {
+      "name": "citations_plain_name1",
+      "description": "citations_plain_description1",
+    },
+    {
+      "name": "citations_plain_name2",
+      "description": "citations_plain_description2",
+    }
+  ],
+  "citations": [
+    {
+      "type": "plain",
+      "payload": "citations_plain_Foo et al., Foo and Bars in Foobars, 1845"
+    },
+  ],
+}

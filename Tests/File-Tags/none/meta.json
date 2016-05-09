@@ -1,0 +1,13 @@
+{
+  "name": "filetags_none_name",
+  "origin": "filetags_none_origin",
+  "license": "filetags_none_license",
+  "contact": "filetags_none_contact",
+  "tags": [ "t" ],
+  "files": [
+    {
+      "name": "filetags_none_name1",
+      "description": "filetags_none_description1",
+    },
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "filetags_double_name",
+  "origin": "filetags_double_origin",
+  "license": "filetags_double_license",
+  "contact": "filetags_double_contact",
+  "tags": [ "t" ],
+  "files": [
+    {
+      "name": "filetags_double_name1",
+      "description": "filetags_double_description1",
+      "tags": [ "filetags_double_name1-tag1", "filetags_double-tag2" ]
+    },
+  ]
+}

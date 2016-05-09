@@ -1,0 +1,14 @@
+{
+  "name": "filetags_single_name",
+  "origin": "filetags_single_origin",
+  "license": "filetags_single_license",
+  "contact": "filetags_single_contact",
+  "tags": [ "t" ],
+  "files": [
+    {
+      "name": "filetags_single_name1",
+      "description": "filetags_single_description1",
+      "tags": [ "filetags_single_name1-tag1" ]
+    },
+  ]
+}

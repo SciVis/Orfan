@@ -1,0 +1,27 @@
+{
+  "name": "citations_doibibtex_name",
+  "origin": "citations_doibibtex_origin",
+  "license": "citations_doibibtex_license",
+  "contact": "citations_doibibtex_contact",
+  "tags": [ "citations_doibibtex_tag1" ],
+  "files": [
+    {
+      "name": "citations_doibibtex_name1",
+      "description": "citations_doibibtex_description1",
+    },
+    {
+      "name": "citations_doibibtex_name2",
+      "description": "citations_doibibtex_description2",
+    }
+  ],
+  "citations": [
+    {
+      "type": "DOI",
+      "payload": "citations_doibibtex_doi:10.1594/PANGAEA.726855"
+    },
+    {
+      "type": "BibTex",
+      "payload": "citations_doibibtex_@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}"
+    }
+  ],
+}

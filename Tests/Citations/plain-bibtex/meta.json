@@ -1,0 +1,27 @@
+{
+  "name": "citations_plainbibtex_name",
+  "origin": "citations_plainbibtex_origin",
+  "license": "citations_plainbibtex_license",
+  "contact": "citations_plainbibtex_contact",
+  "tags": [ "citations_plainbibtex_tag1" ],
+  "files": [
+    {
+      "name": "citations_plainbibtex_name1",
+      "description": "citations_plainbibtex_description1",
+    },
+    {
+      "name": "citations_plainbibtex_name2",
+      "description": "citations_plainbibtex_description2",
+    }
+  ],
+  "citations": [
+    {
+      "type": "plain",
+      "payload": "citations_plainbibtex_Foo et al., Foo and Bars in Foobars, 1845"
+    },
+    {
+      "type": "BibTex",
+      "payload": "citations_plainbibtex_@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}"
+    }
+  ],
+}
