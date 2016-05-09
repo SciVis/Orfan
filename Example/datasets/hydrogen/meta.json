@@ -19,10 +19,23 @@
     }
   ],
   "description": "Hydrogen change density",
-  "acknowlagements": "",
+  "acknowledgements": "",
   "software": [
     "Inviwo"
   ],
-  "citations": [],
+  "citations": [
+    {
+      "type": "plain",
+      "payload": "Bar et al., Barifoos, 145. B.C."
+    },
+    {
+      "type": "DOI",
+      "payload": "http://dx.doi.org/10.1002/0470841559.ch1"
+    },
+    {
+      "type": "BibTex",
+      "payload": "@article{small,\nauthor = {Freely, I.P.},\ntitle = {A small paper},\njournal = {The journal of small papers},\nyear = 1997,\nvolume = {-1},\nnote = {to appear},}"
+    }
+  ],
   "notes": "These are notes"
 }

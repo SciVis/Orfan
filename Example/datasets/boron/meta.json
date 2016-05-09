@@ -25,11 +25,24 @@
     }
   ],
   "description": "Boron change density",
-  "acknowlagements": "",
+  "acknowledgements": "",
   "software": [
     "Inviwo"
   ],
-  "citations": [],
+  "citations": [
+    {
+      "type": "plain",
+      "payload": "Foo et al., Foo and Bars in Foobars, 1845"
+    },
+    {
+      "type": "DOI",
+      "payload": "doi:10.1594/PANGAEA.726855"
+    },
+    {
+      "type": "BibTex",
+      "payload": "@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}"
+    }
+  ],
   "notes": "These are other notes"
 
 }
