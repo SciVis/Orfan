@@ -1,7 +1,8 @@
 import json
+import os
 from htmlgen import Document, Division, Image
 
-def ParseCollection(info):
+def parseCollection(info):
     div = Division()
     div.add_css_classes('dataset')
 
@@ -18,6 +19,15 @@ def ParseCollection(info):
     div.append(createTextElement('notes', info))
 
     return div
+
+def gatherThumbnails(info):
+    thumbnails = []
+
+    for thumbnail in info['thumbnails']:
+        t = thumbnail['name']
+        thumbnails.append(os.path.join(info['path'], t))
+
+    return thumbnails
 
 ####################################################################################
 ####################################################################################
@@ -194,10 +204,13 @@ def createBibTexCitationElement(payload):
 def generate(meta, software):
     doc = Document()
 
+    thumbnails = []
+
     for key, value in meta.items():
         value['path'] = key
         value['allSoftwares'] = software
-        d = ParseCollection(value)
+        d = parseCollection(value)
         doc.append_body(d)
+        thumbnails.extend(gatherThumbnails(value))
 
-    return doc
+    return doc, thumbnails

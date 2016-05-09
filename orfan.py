@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import shutil
 
 
 missing_modules = {}
@@ -61,11 +62,14 @@ if __name__ == '__main__':
     with open(os.path.join(args.path, files.software)) as f:
         software = json.load(f)
 
-    html = orfan.generator.generate(meta, software)
+    html, thumbnails = orfan.generator.generate(meta, software)
 
     outputDir = mkdir(args.dest)
 
     with open(os.path.join(outputDir, files.html), 'w') as f:
         f.write(str(html))
+    for thumbnail in thumbnails:
+        os.makedirs(os.path.dirname(os.path.join(outputDir, thumbnail)))
+        shutil.copyfile(thumbnail, os.path.join(outputDir, thumbnail))
 
     orfan.style.writeCSS(os.path.join(outputDir, files.css))
