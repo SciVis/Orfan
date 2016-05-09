@@ -54,7 +54,7 @@ if __name__ == '__main__':
     files = ConfigFiles()
 
     parser.add_argument('-p', '--path', type=str, action="store", dest="path",
-                        help='Path to data storage', default = ".")
+                        help='Path to data storage', default = "./Example")
     parser.add_argument('-d', '--dest', type=str,  action="store", dest="dest",
                        help='Destination dir of dataset gallery', default = "./html" )
     args = parser.parse_args()
