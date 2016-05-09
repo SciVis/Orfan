@@ -3,7 +3,7 @@
   "origin": "Peter Steneteg",
   "license": "Free",
   "contact": "Peter Steneteg peter.steneteg@liu.se",
-  "tags": [ "volume", "charge density" "boron" ],
+  "tags": [ "volume", "charge density", "boron" ],
   "files": [
     {
       "name": "alpha-boron.*",
