@@ -34,8 +34,8 @@ import orfan.style
 
 def mkdir(*path):
     res = os.path.join(*path) 
-    if not os.path.isdir(res):
-        os.mkdir(res)
+    shutil.rmtree(res)
+    os.mkdir(res)
     return res
 
 if __name__ == '__main__':

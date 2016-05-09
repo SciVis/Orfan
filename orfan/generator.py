@@ -103,7 +103,8 @@ def createThumbnailElements(info):
         d.add_css_classes('dataset-thumbnail')
 
         # Image
-        image = Image(thumbnail['name'], thumbnail['caption'])
+        imagePath = os.path.join(info['path'], thumbnail['name'])
+        image = Image(imagePath, thumbnail['caption'])
         d.append(image)
 
         # Name
