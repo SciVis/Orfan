@@ -38,7 +38,7 @@ if __name__ == '__main__':
                        help='Destination dir of dataset gallery', default = "./html" )
     args = parser.parse_args()
 
-    meta = orfan.scraper.scrape(args.path)
+    meta, thumbnails = orfan.scraper.scrape(args.path)
     with open(os.path.join(args.path, "software.json")) as f:
         software = json.load(f)
 
@@ -49,8 +49,7 @@ if __name__ == '__main__':
         f.write("var data = ")
         f.write(json.dumps({"datasets" : meta, "software" : software}, indent=4))
 
-    #html, thumbnails = orfan.generator.generate(meta, software, files)
-
-    #for thumbnail in thumbnails:
-    #    os.makedirs(os.path.dirname(os.path.join(outputDir, thumbnail)),  exist_ok=True)
-    #    shutil.copyfile(thumbnail, os.path.join(outputDir, thumbnail))
+    for thumbnail in thumbnails:
+        os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),  exist_ok=True)
+        shutil.copyfile(os.path.join(args.path, thumbnail),
+                        os.path.join(outputDir, "thumbnails", thumbnail))
