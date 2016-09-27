@@ -3,22 +3,11 @@ import json
 import os
 import shutil
 
-
 missing_modules = {}
 try:
     import orfan
 except ImportError:
     missing_modules['orfan'] = "main Orfan module missing"
-
-try:
-    import lesscpy
-except ImportError:
-    missing_modules['lesscpy'] = "needed for css generation"
-
-try:
-    import htmlgen
-except ImportError:
-    missing_modules['htmlgen'] = "needed for html generation"
 
 if len(missing_modules)>0: 
     print("Error: Missing python modules:")
@@ -30,8 +19,6 @@ if len(missing_modules)>0:
 
 import orfan.scraper
 import orfan.generator
-import orfan.style
-import orfan.javascripts
 
 def mkdir(*path):
     res = os.path.join(*path) 
@@ -45,15 +32,6 @@ if __name__ == '__main__':
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
-    class ConfigFiles:
-        css = "orfan.css"
-        html = "orfan.html"
-        software = "software.json"
-        scripts = ["jquery-2.2.3.min.js", "list-1.2.0.min.js"]
-        mainjs = "main.js"
-
-    files = ConfigFiles()
-
     parser.add_argument('-p', '--path', type=str, action="store", dest="path",
                         help='Path to data storage', default = "./Example")
     parser.add_argument('-d', '--dest', type=str,  action="store", dest="dest",
@@ -61,22 +39,18 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     meta = orfan.scraper.scrape(args.path)
-
-    with open(os.path.join(args.path, files.software)) as f:
+    with open(os.path.join(args.path, "software.json")) as f:
         software = json.load(f)
 
-    html, thumbnails = orfan.generator.generate(meta, software, files)
-
-    #if os.path.isdir(args.dest): shutil.rmtree(args.dest)
+    #if os.path.isdir(args.dest) : shutil.rmtree(args.dest)
     outputDir = mkdir(args.dest)
 
-    with open(os.path.join(outputDir, files.html), 'w') as f:
-        f.write(str(html))
-    for thumbnail in thumbnails:
-        os.makedirs(os.path.dirname(os.path.join(outputDir, thumbnail)),  exist_ok=True)
-        shutil.copyfile(thumbnail, os.path.join(outputDir, thumbnail))
+    with open(os.path.join(outputDir, "data.js"), 'w') as f:
+        f.write("var data = ")
+        f.write(json.dumps({"datasets" : meta, "software" : software}, indent=4))
 
-    orfan.style.writeCSS(os.path.join(outputDir, files.css))
-    for script in files.scripts:
-        orfan.javascripts.writeScript(outputDir, script)
-    orfan.javascripts.writeScript(outputDir, files.mainjs)
+    #html, thumbnails = orfan.generator.generate(meta, software, files)
+
+    #for thumbnail in thumbnails:
+    #    os.makedirs(os.path.dirname(os.path.join(outputDir, thumbnail)),  exist_ok=True)
+    #    shutil.copyfile(thumbnail, os.path.join(outputDir, thumbnail))

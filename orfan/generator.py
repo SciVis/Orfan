@@ -1,6 +1,7 @@
 import json
 import os
-from htmlgen import Document, Division, Image, UnorderedList, ListItem, Input, Button, Script
+
+#from htmlgen import Document, Division, Image, UnorderedList, ListItem, Input, Button, Script
 
 def parseCollection(info):
     div = Division()
