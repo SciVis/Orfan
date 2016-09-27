@@ -18,7 +18,6 @@ if len(missing_modules)>0:
 
 
 import orfan.scraper
-import orfan.generator
 
 def mkdir(*path):
     res = os.path.join(*path) 
