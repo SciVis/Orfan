@@ -1,0 +1,69 @@
+.nav .breadcrumb {
+    margin: 0 7px;
+}
+@media (min-width: 768px) {
+    .nav .breadcrumb {
+        float: left;
+        margin: 7px 10px;
+    }
+}
+
+.element-title {
+	font-size: 16px;
+}
+
+.element-thumb-img {
+	max-width: 200px;
+	max-height: 180px;
+}
+
+.element-tag-container > * {
+		margin: 2px;
+}
+
+.info-container-table th {
+	width: 15%;
+}
+
+.sub-panel {
+	padding: 0px;
+}
+
+.panel {
+	margin-bottom: 10px;
+}
+
+.panel-heading {
+	padding: 5px 15px;
+}
+
+.thumbnail-container {
+	padding: 15px;
+}
+
+.citations-container td:last-child {
+	width: 15%;
+}
+
+.element-header {
+	font-size: 18px;
+	color: #000;
+}
+
+.files-container-table th {
+	width: 15%;
+}
+
+.files-filelist-size-target {
+	padding-left: 20px;
+}
+
+.thumbnail {
+	margin-bottom: 0px;
+}
+
+.table {
+	margin-bottom: 0px;
+}
+
+body { padding-top: 70px; }

@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ORFAN</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/orfan.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body id="body">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav navbar-nav navbar-left">
+            <ul class="breadcrumb" id="breadcrumb">
+                <li class="active"><a href="#">Orfan</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="glyphicon glyphicon-search"></span>
+              </span>
+              <input type="text" class="form-control search" placeholder="Filter" aria-describedby="basic-addon1">
+            </div>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row list" id="element-container">
+        <div class="element" id='example-element'>
+          <!-- hidden info per element -->
+          <div class="path" id='path' hidden>Base/Subfolder/subsubfolder/</div>
+          <div class='min-view col-xs-6 col-sm-4 col-md-3 col-lg-3'>
+            <div class='panel panel-default'>
+              <div class='panel-heading'>
+                <div>
+                  <button class="btn btn-s pull-right maximize-view"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></button>
+                  <h4 class="header-container title">This is the minimized view</h4>
+                </div>
+                <div class='path-container'>
+                  <a href="#">Base/</a>
+                  <a href="#">Subfolder/</a>
+                  <a href="#">subsubfolder/</a>
+                </div>
+                <div class='tag-container'>
+                  <a href="#"><span class='label label-info tag'>Tag1</span></a>
+                  <a href="#"><span class='label label-info'>Tag2</span></a>
+                  <a href="#"><span class='label label-info'>Tag3</span></a>
+                  <a href="#"><span class='label label-info'>Tag4</span></a>
+                  <a href="#"><span class='label label-info'>Tag5</span></a>
+                  <a href="#"><span class='label label-info'>Extra long tag</span></a>
+                </div>
+              </div>
+              <div class='panel-body'>
+                <div class='thumbnail-preview'>
+                  <div class='thumbnail'>
+                    <img class='element-thumb-img' src='img/no_img.png' alt=''>
+                  </div>
+                  <div class='text-center'><span class="description-target">This is the description</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='max-view col-xs-12'>
+            <div class='panel panel-default'>
+              <div class='panel-heading'>
+                <div>
+                  <button class="btn btn-s pull-right minimize-view"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></button>
+                  <h4 class="header-container title">This is the maximized view</h4>
+                </div>
+                <div class='path-container'>
+                  <a href="#" class="path-container-element">Base/</a>
+                  <a href="#">Subfolder/</a>
+                  <a href="#">subsubfolder/</a>
+                </div>
+                <div class='tag-container'>
+                  <a href="#"><span class='label label-info'>Tag1</span></a>
+                  <a href="#"><span class='label label-info'>Tag2</span></a>
+                  <a href="#"><span class='label label-info'>Tag3</span></a>
+                  <a href="#"><span class='label label-info'>Tag4</span></a>
+                  <a href="#"><span class='label label-info'>Tag5</span></a>
+                  <a href="#"><span class='label label-info'>Extra long tag</span></a>
+                </div>
+              </div>
+              <div class='panel-body'>
+                <div class='panel panel-default thumbnail-panel'>
+                  <div class="panel-heading">
+                    <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#thumbnail-container" aria-expanded="false" aria-controls="thumbnail-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+                    <span>Thumbnails</span>
+                  </div>
+                  <div class="panel-body row thumbnail-container collapse" id="thumbnail-container">
+                    <div class='col-xs-6 col-sm-4 col-md-3 col-lg-2 thumbnail-div'>
+                      <div class='thumbnail'>
+                        <img class='element-thumb-img' src='img/no_img.png' alt=''>
+                        <div class='caption text-center'>
+                          <span class="caption-target">This is an img caption</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class='panel panel-default'>
+                  <div class="panel-heading">
+                    <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#info-container" aria-expanded="false" aria-controls="info-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+                    <span>Information</span>
+                  </div>
+                  <div class="panel-body sub-panel collapse" id="info-container">
+                    <table class="table table-striped info-container-table">
+                      <tbody>
+                        <tr>
+                          <th>Description</th>
+                          <td class='description-target'>this is a description</td>
+                        </tr>
+                        <tr>
+                          <th>Origin</th>
+                          <td class='origin-target'>from mister X</td>
+                        </tr>
+                        <tr>
+                          <th>Contact</th>
+                          <td class='contact-target'>niklas@liu.se</td>
+                        </tr>
+                        <tr>
+                          <th>License</th>
+                          <td class='license-target'>Free</td>
+                        </tr>
+                        <tr>
+                          <th>Notes</th>
+                          <td class='notes-target'>this is a note</td>
+                        </tr>
+                        <tr>
+                          <th>Acknowledgements</th>
+                          <td class='acknowledgements-target'>thank you mister x</td>
+                        </tr>
+                        <tr>
+                          <th>Software</th>
+                          <td class='software-target'>Inviwo</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class='panel panel-default'>
+                  <div class="panel-heading">
+                    <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#citations-container-div" aria-expanded="false" aria-controls="citations-container-div"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+                    <span>Citations</span>
+                  </div>
+                  <div class="panel-body sub-panel collapse" id="citations-container-div">
+                    <table class="table table-striped citations-container-table">
+                      <tbody class="citations-container">
+                        <tr>
+                          <td class="payload-target">@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}</td>
+                          <td class="type-target">BibTex</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class='panel panel-default'>
+                  <div class="panel-heading">
+                    <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#files-container" aria-expanded="false" aria-controls="files-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+                    <span>Files</span>
+                  </div>
+                  <div class="panel-body collapse files-container" id="files-container">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <span class="files-name-target">File heading</span>
+                      </div>
+                      <div class="panel-body sub-panel">
+                        <table class="table table-responsive table-striped files-container-table">
+                          <tbody>
+                            <tr>
+                              <th>Format</th>
+                              <td class="files-format-target">Some format</td>
+                            </tr>
+                            <tr>
+                              <th>Description</th>
+                              <td class="files-description-target">Some description</td>
+                            </tr>
+                            <tr>
+                              <th>Resolution</th>
+                              <td class="files-resolution-target">32x32x32</td>
+                            </tr>
+                            <tr>
+                              <th>Files</th>
+                              <td>
+                                <table class="files-filelist-container">
+                                  <tr><td><span class="files-filelist-name-target">filelist.file1</span></td><td><span class="files-filelist-size-target">120</span> KB</td></tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; 2016 SciVis Group Norrköping</p>
+      </footer>
+    </div><!--/.container-->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="js/list.min.js"></script>
+    <script type="text/javascript" src="js/orfan.js"></script>
+  </body>
+</html>
