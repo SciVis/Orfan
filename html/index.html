@@ -55,23 +55,23 @@
     </nav>
 
     <div class="container">
-      <div class="row list" id="element-container">
-        <div class="element" id='example-element'>
+      <div class="list grid element-container" id="element-container">
+        <div class="element item element-minimized" id='example-element'>
           <!-- hidden info per element -->
           <div class="path" id='path' hidden>Base/Subfolder/subsubfolder/</div>
-          <div class='min-view col-xs-6 col-sm-4 col-md-3 col-lg-3'>
+          <div class='min-view'> <!-- col-xs-6 col-sm-4 col-md-3 col-lg-3 -->
             <div class='panel panel-default'>
               <div class='panel-heading'>
                 <div>
                   <button class="btn btn-s pull-right maximize-view"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></button>
-                  <h4 class="header-container title">This is the minimized view</h4>
+                  <h4 class="header-container title crop">This is the minimized view</h4>
                 </div>
                 <div class='path-container'>
                   <a href="#">Base/</a>
                   <a href="#">Subfolder/</a>
                   <a href="#">subsubfolder/</a>
                 </div>
-                <div class='tag-container'>
+                <div class='tag-container crop'>
                   <a href="#"><span class='label label-info tag'>Tag1</span></a>
                   <a href="#"><span class='label label-info'>Tag2</span></a>
                   <a href="#"><span class='label label-info'>Tag3</span></a>
@@ -85,12 +85,12 @@
                   <div class='thumbnail'>
                     <img class='element-thumb-img' src='img/no_img.png' alt=''>
                   </div>
-                  <div class='text-center'><span class="description-target">This is the description</span></div>
+                  <div class='text-center crop'><span class="description-target">This is the description</span></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class='max-view col-xs-12'>
+          <div class='max-view'> <!-- col-xs-12 -->
             <div class='panel panel-default'>
               <div class='panel-heading'>
                 <div>
@@ -117,7 +117,7 @@
                     <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#thumbnail-container" aria-expanded="false" aria-controls="thumbnail-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
                     <span>Thumbnails</span>
                   </div>
-                  <div class="panel-body row thumbnail-container collapse" id="thumbnail-container">
+                  <div class="panel-body row thumbnail-container collapse in" id="thumbnail-container">
                     <div class='col-xs-6 col-sm-4 col-md-3 col-lg-2 thumbnail-div'>
                       <div class='thumbnail'>
                         <img class='element-thumb-img' src='img/no_img.png' alt=''>
@@ -133,7 +133,7 @@
                     <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#info-container" aria-expanded="false" aria-controls="info-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
                     <span>Information</span>
                   </div>
-                  <div class="panel-body sub-panel collapse" id="info-container">
+                  <div class="panel-body sub-panel collapse in" id="info-container">
                     <table class="table table-striped info-container-table">
                       <tbody>
                         <tr>
@@ -242,6 +242,8 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="js/list.min.js"></script>
+    <script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
     <script type="text/javascript" src="js/orfan.js"></script>
   </body>
 </html>
