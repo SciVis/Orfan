@@ -137,7 +137,9 @@ function createElement(key, meta_data) {
 				event.preventDefault();
 
 				var html = $(this).find(".tag").html();
-				var $find_all_tags_with_html = $("#active-tag-container").find(".tag:contains('"+html+"')");
+				var $find_all_tags_with_html = $("#active-tag-container").find(".tag").filter(function() {
+					return this.innerHTML === html;
+				});
 				if ($find_all_tags_with_html.length > 0)
 					return;
 
@@ -310,12 +312,47 @@ function createElement(key, meta_data) {
 	return elem;
 }
 
+function extractTagsAsStrings(q_obj) {
+	var tag_array = [];
+	$(q_obj).find("span").each(function() {
+		tag_array.push(this.innerHTML);
+	});
+
+	return tag_array;
+}
+
+// Returns true if all strings within filter_tags are represented in element_tags
+function filterTags(element_tags, filter_tags) {
+	for (var i = filter_tags.length - 1; i >= 0; i--) {
+		var listed = false;
+		for (var u = element_tags.length - 1; u >= 0; u--) {
+			if (element_tags[u] === filter_tags[i]) {
+				listed = true;
+				break;
+			}
+		}
+		if (listed === false)
+			return false;
+	}
+
+	return true;
+}
+
 // This is a second filter applied orthogonal to list.js filtering
 function customFilterElements() {
 	var path = window.location.hash.substr(1);
+	var filter_tag_array = extractTagsAsStrings($("#active-tag-container"));
 
 	$(".element").hide();
-	$(".element").has("#path:contains('"+path+"')").show();
+
+	$(".element").filter(function() {
+		var element_tag_array = extractTagsAsStrings($(this).find("#element-tag-container"));
+
+		var q1 = $(this).find("#path:contains('"+path+"')").length > 0;
+		var q2 = filterTags(element_tag_array, filter_tag_array);
+
+		return q1 && q2;
+	}).show();
 }
 
 // Use hashtag to filter data based on path
