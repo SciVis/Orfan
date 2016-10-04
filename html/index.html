@@ -14,7 +14,10 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- Lightbox css -->
+    <link href="css/ekko-lightbox.min.css" rel="stylesheet">
+
+    <!-- Custom styles our application -->
     <link href="css/orfan.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -25,7 +28,7 @@
   </head>
 
   <body id="body">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -50,16 +53,18 @@
               <input type="text" class="form-control search" placeholder="Filter" aria-describedby="basic-addon1">
             </div>
           </form>
+          <div class="navbar-form navbar-right" id="active-tag-container">
+          </div>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
     <div class="container">
-      <div class="list grid element-container" id="element-container">
-        <div class="element item element-minimized" id='example-element'>
+      <div class="list grid element-container row" id="element-container">
+        <div class="element item col-xs-6 col-sm-4 col-md-3 col-lg-3 element-minimized" id='example-element'>
           <!-- hidden info per element -->
           <div class="path" id='path' hidden>Base/Subfolder/subsubfolder/</div>
-          <div class='min-view'> <!-- col-xs-6 col-sm-4 col-md-3 col-lg-3 -->
+          <div class='min-view'>
             <div class='panel panel-default'>
               <div class='panel-heading'>
                 <div>
@@ -72,25 +77,27 @@
                   <a href="#">subsubfolder/</a>
                 </div>
                 <div class='tag-container crop'>
-                  <a href="#"><span class='label label-info tag'>Tag1</span></a>
-                  <a href="#"><span class='label label-info'>Tag2</span></a>
-                  <a href="#"><span class='label label-info'>Tag3</span></a>
-                  <a href="#"><span class='label label-info'>Tag4</span></a>
-                  <a href="#"><span class='label label-info'>Tag5</span></a>
-                  <a href="#"><span class='label label-info'>Extra long tag</span></a>
+                  <a href=""><span class='label label-info tag'>Tag1</span></a>
+                  <a href=""><span class='label label-info'>Tag2</span></a>
+                  <a href=""><span class='label label-info'>Tag3</span></a>
+                  <a href=""><span class='label label-info'>Tag4</span></a>
+                  <a href=""><span class='label label-info'>Tag5</span></a>
+                  <a href=""><span class='label label-info'>Extra long tag</span></a>
                 </div>
               </div>
-              <div class='panel-body'>
-                <div class='thumbnail-preview'>
-                  <div class='thumbnail'>
-                    <img class='element-thumb-img' src='img/no_img.png' alt=''>
+              <div class="panel-body">
+                <div class="thumbnail-preview">
+                  <div class="thumbnail">
+                    <a href="img/no_img.png" data-toggle="lightbox" data-footer="This is the thumbnail description">
+                      <img class="img-fluid" src="img/no_img.png" alt="">
+                    </a>
                   </div>
                   <div class='text-center crop'><span class="description-target">This is the description</span></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class='max-view'> <!-- col-xs-12 -->
+          <div class='max-view'>
             <div class='panel panel-default'>
               <div class='panel-heading'>
                 <div>
@@ -120,9 +127,11 @@
                   <div class="panel-body row thumbnail-container collapse in" id="thumbnail-container">
                     <div class='col-xs-6 col-sm-4 col-md-3 col-lg-2 thumbnail-div'>
                       <div class='thumbnail'>
-                        <img class='element-thumb-img' src='img/no_img.png' alt=''>
+                        <a href="img/no_img.png" data-toggle="lightbox" data-footer="This is the thumbnail description" data-gallery="id-will-be-used-here">
+                          <img class='img-fluid' src='img/no_img.png' alt=''>
+                        </a>
                         <div class='caption text-center'>
-                          <span class="caption-target">This is an img caption</span>
+                          <span class="caption-target">This is an thumbnail description</span>
                         </div>
                       </div>
                     </div>
@@ -235,11 +244,12 @@
     </div><!--/.container-->
 
 
-    <!-- Bootstrap core JavaScript
+    <!-- Javascripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/ekko-lightbox.min.js"></script>
     <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="js/list.min.js"></script>
     <script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>

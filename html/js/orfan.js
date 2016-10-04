@@ -1,8 +1,37 @@
+var masonry_obj;
+
 $(document).ready(function() {
+	// --- LOAD DATA ---
 	loadAndPopulateData();
+
+	// --- INIT EXTERNAL OBJECTS ---
+
+	// Masonry
+	masonry_obj = new Masonry('.grid', {
+	  // options
+	  itemSelector: '.item',
+	  columnWidth: '.element:not([style*="display: none"])'
+	});
+
+	// layout Masonry after each image loads
+	imagesLoaded(masonry_obj, function() {
+		masonry_obj.layout();
+	});
+
+	// List
+	var listObj = new List('body', {
+		valueNames: ['title', 'path', 'tag']
+	});
+
+	listObj.on("searchComplete", function() {
+		masonry_obj.layout();
+	})
 });
 
-var masonry_obj;
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+});
 
 // Loads metalist containing references to all meta data
 function loadAndPopulateData() {
@@ -18,6 +47,7 @@ function loadAndPopulateData() {
 	// Hide the template element and apply default values that will be copied into the clones
 	$("#example-element").hide();
 	$("#example-element .max-view").hide();
+	$("#example-element").find('[data-toggle="lightbox"]').attr("data-footer", "");
 
 	var container = document.getElementById("element-container");
 	for (var key in metas) {
@@ -26,30 +56,6 @@ function loadAndPopulateData() {
 
 	// Remove example element
 	$("#example-element").remove();
-
-	// Init external objects
-
-	// Masonry
-	masonry_obj = new Masonry('.grid', {
-	  // options
-	  itemSelector: '.item',
-	  columnWidth: 250,
-	  gutter: 10
-	});
-
-	// layout Masonry after each image loads
-	$(masonry_obj).imagesLoaded().progress( function() {
-	  masonry_obj.layout();
-	});
-
-	// List
-	var listObj = new List('body', {
-		valueNames: ['title', 'path', 'tag']
-	});
-
-	listObj.on("searchComplete", function() {
-		masonry_obj.layout();
-	})
 }
 
 
@@ -123,10 +129,33 @@ function createElement(key, meta_data) {
 		$(this).empty();
 		for (var i=0; i < meta_data["tags"].length; i++) {
 			var e = tag_elem.clone();
-			$(e).attr("href", "#");
 			$(e).find(".label").html(meta_data["tags"][i]);
 			$(this).append(e);
 			$(this).append(" ");
+
+			$(e).on('click', function(event) {
+				event.preventDefault();
+
+				var html = $(this).find(".tag").html();
+				var $find_all_tags_with_html = $("#active-tag-container").find(".tag:contains('"+html+"')");
+				if ($find_all_tags_with_html.length > 0)
+					return;
+
+				var new_elem = $(this).clone();
+				$(new_elem).off('click');
+				$(new_elem).on('click', function(event) {
+					event.preventDefault();
+					$(this).remove();
+					customFilterElements();
+					masonry_obj.layout();
+				});
+
+				// Append element
+				$("#active-tag-container").append(new_elem).append(" ");
+
+				customFilterElements();
+				masonry_obj.layout();
+			});
 		}
 	});
 
@@ -134,19 +163,32 @@ function createElement(key, meta_data) {
 	var thumb_src_base = "thumbnails" + "/" + key + "/";
 
 	if (meta_data["thumbnails"] !== undefined && meta_data["thumbnails"].length > 0) {
-		if (meta_data["thumbnails"].length > 0)
-			$(elem).find(".thumbnail-preview img").attr("src", thumb_src_base + meta_data["thumbnails"][0]["name"]);
+		if (meta_data["thumbnails"].length > 0) {
+			// Minimized view
+			{
+				var src = thumb_src_base + meta_data["thumbnails"][0]["name"];
+				var cap = meta_data["thumbnails"][0]["caption"];
 
-		$(elem).find(".thumbnail-container").html(function() {
-			var thumb_elem = $(this).find(":first").clone();
-			$(this).empty();
-			for (var i=0; i < meta_data["thumbnails"].length; i++) {
-				var e = thumb_elem.clone();
-				$(e).find("img").attr("src", thumb_src_base + meta_data["thumbnails"][i]["name"]);
-				$(e).find(".caption-target").html(meta_data["thumbnails"][i]["caption"]);
-				$(this).append(e);
+				$(elem).find(".thumbnail-preview a").attr("href", src).attr("data-footer", cap);
+				$(elem).find(".thumbnail-preview img").attr("src", src);
 			}
-		});
+
+			// Maximized view
+			$(elem).find(".thumbnail-container").html(function() {
+				var thumb_elem = $(this).find(":first").clone();
+				$(this).empty();
+				for (var i=0; i < meta_data["thumbnails"].length; i++) {
+					var e = thumb_elem.clone();
+					var src = thumb_src_base + meta_data["thumbnails"][i]["name"];
+					var cap = meta_data["thumbnails"][i]["caption"];
+
+					$(e).find("a").attr("href", src).attr("data-footer", cap).attr("data-gallery", id);
+					$(e).find("img").attr("src", src);
+					$(e).find(".caption-target").html(cap);
+					$(this).append(e);
+				}
+			});
+		}
 	}
 
 	// Update various information
@@ -214,13 +256,17 @@ function createElement(key, meta_data) {
 		}
 	});
 
-	// FUNCTIONALITY
+	// --- FUNCTIONALITY ---
+
+	const minimized_class_list = "col-xs-6 col-sm-4 col-md-3 col-lg-3 element-minimized";
+	const maximized_class_list = "col-xs-12 element-maximized";
 
 	// Implement hide show
 	$(elem).find(".maximize-view").on("click", function() {
-		$(".element").removeClass("element-maximized").addClass("element-minimized");
-		$(elem).removeClass("element-minimized");
-		$(elem).addClass("element-maximized");
+		// Set all elements to minimized
+		$(".element").removeClass(maximized_class_list).addClass(minimized_class_list);
+		// Set active element to maximized
+		$(elem).removeClass(minimized_class_list).addClass(maximized_class_list);
 
 		$(".max-view").hide();
 		$(".min-view").show();
@@ -231,8 +277,7 @@ function createElement(key, meta_data) {
 	});
 
 	$(elem).find(".minimize-view").on("click", function() {
-		$(elem).removeClass("element-maximized");
-		$(elem).addClass("element-minimized");
+		$(elem).removeClass(maximized_class_list).addClass(minimized_class_list);
 
 		$(".max-view").hide();
 		$("#"+id+" .min-view").show();
@@ -267,15 +312,10 @@ function createElement(key, meta_data) {
 
 // This is a second filter applied orthogonal to list.js filtering
 function customFilterElements() {
-
 	var path = window.location.hash.substr(1);
 
-	//if (path.length > 0) {
-		//console.log("path is "+path);
-		//console.log( $(".element#path"));
-		$(".element").hide();
-		$(".element").has("#path:contains('"+path+"')").show();
-	//}
+	$(".element").hide();
+	$(".element").has("#path:contains('"+path+"')").show();
 }
 
 // Use hashtag to filter data based on path

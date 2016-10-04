@@ -12,11 +12,14 @@
 	font-size: 16px;
 }
 
+/*
 .element-thumb-img {
 	max-width: 200px;
 	max-height: 180px;
 }
+*/
 
+/*
 .element-minimized {
 	width: 250px;
 }
@@ -28,6 +31,7 @@
 .min-view {
 	height: 350px;
 }
+*/
 
 .element-container {
 	margin-top: 70px;
@@ -88,7 +92,11 @@
   text-overflow:ellipsis;
 }​
 
-body { padding-top: 70px; }
+.active-tag-container {
+	width: 200px;
+}
+
+/*body { padding-top: 70px; } */
 
 /*
 *, *:before, *:after {box-sizing:  border-box !important;}
