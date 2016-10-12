@@ -1,0 +1,33 @@
+{
+  "name": "Boron charge density",
+  "origin": "Peter Steneteg",
+  "license": "Free",
+  "contact": "Peter Steneteg peter.steneteg@liu.se",
+  "tags": [ "volume", "charge density" "boron" ],
+  "files": [
+    {
+      "name": "alpha-boron.*",
+      "description": "alpha phase",
+      "format": "Inviwo dat",
+      "resolution": [ 128, 128, 128 ]
+    },
+    {
+      "name": "gamma-boron.*",
+      "description": "gamma phase",
+      "format": "Inviwo dat",
+      "resolution": [ 128, 128, 128 ]
+    }
+  ],
+  "thumbnails": [
+    {
+      "name": "tumbnail.png",
+      "caption": "Boron chargedensity"
+    }
+  ],
+  "description": "Boron change density",
+  "acknowlagements": "",
+  "software": [
+    "Inviwo"
+  ],
+  "citations": []
+}
