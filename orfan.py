@@ -49,6 +49,9 @@ if __name__ == '__main__':
         f.write(json.dumps({"datasets" : meta, "software" : software}, indent=4))
 
     for thumbnail in thumbnails:
-        os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),  exist_ok=True)
-        shutil.copyfile(os.path.join(args.path, thumbnail),
-                        os.path.join(outputDir, "thumbnails", thumbnail))
+        if os.path.exists(os.path.join(args.path, thumbnail)):
+            os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),  exist_ok=True)
+            shutil.copyfile(os.path.join(args.path, thumbnail),
+                            os.path.join(outputDir, "thumbnails", thumbnail))
+        else: 
+            print("missing thumbnail: " + os.path.join(args.path, thumbnail))

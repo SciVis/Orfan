@@ -1,0 +1,44 @@
+{
+  "name": "(required)",
+  "origin": "Entity/Person (required)",
+  "license": "Not specified (required)",
+  "contact": "Person (required)",
+  "tags": [ "tag1 (required)", "tag2" ],
+  "description": "description",
+  "link" : "",
+  "notes": "",
+  "software": [
+    "Inviwo",
+    "OpenSpace"
+  ],
+  "files": [
+    {
+      "name": "filename.* (required)",
+      "description": "description (required)",
+      "format": "Structured grid",
+      "resolution": [ 1, 1, 1 ],
+      "tags": [ "tag1", "tag2" ]
+    }
+  ],
+  "thumbnails": [
+    {
+      "name": "thumbnail.png",
+      "caption": ""
+    }
+  ],
+  "acknowledgements": "",
+  "citations": [
+    {
+      "type": "plain",
+      "payload": "Foo et al., Foo and Bars in Foobars, 1845"
+    },
+    {
+      "type": "DOI",
+      "payload": "doi:10.1594/PANGAEA.726855"
+    },
+    {
+      "type": "BibTex",
+      "payload": "@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}"
+    }
+  ]
+}

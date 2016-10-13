@@ -21,19 +21,22 @@ def scrape(path):
             if os.path.exists(metafile):
                 with open(metafile) as f:
                     pathname = os.path.relpath(root, prefix).replace(os.sep, '/')
-                    meta = json.load(f)
+                    try:
+                        meta = json.load(f)
 
-                    for file in util.dictget(meta, "files", failure = []):
-                        file["filelist"] = []
-                        if "name" in file.keys():
-                            for f in expandPattern(root, file["name"]):
-                                file["filelist"].append({"name": f, "size" : filesize(root, f)})
+                        for file in util.dictget(meta, "files", failure = []):
+                            file["filelist"] = []
+                            if "name" in file.keys():
+                                for f in expandPattern(root, file["name"]):
+                                    file["filelist"].append({"name": f, "size" : filesize(root, f)})
 
-                    for thumb in util.dictget(meta, "thumbnails", failure = []):
-                        if "name" in thumb.keys():
-                            thumbs.append(os.path.join(pathname, thumb["name"]))
+                        for thumb in util.dictget(meta, "thumbnails", failure = []):
+                            if "name" in thumb.keys():
+                                thumbs.append(os.path.join(pathname, thumb["name"]))
 
-                    masterMeta[pathname] = meta
-                    dirs.clear() # stop recursive search when we found a meta file.
+                        masterMeta[pathname] = meta
+                        dirs.clear() # stop recursive search when we found a meta file.
+                    except json.decoder.JSONDecodeError as error:
+                        print(metafile + ": " + str(error))
     return masterMeta, thumbs
 

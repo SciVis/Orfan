@@ -99,6 +99,9 @@ function createElement(key, meta_data) {
 
 	if (meta_data["citations"] == undefined)
 		meta_data["citations"] = [];
+	
+	if (meta_data["link"] == undefined)
+		meta_data["link"] = "";
 
 	if (meta_data["files"] == undefined)
 		meta_data["files"] = [];
@@ -112,13 +115,17 @@ function createElement(key, meta_data) {
 		var path_elem = $(this).find(":first").clone();
 		$(this).empty();
 		var path_chunks = key.split("/");
-		for (var i=0; i < path_chunks.length; i++) {
+		for (var i=0; i < path_chunks.length ; i++) {
 			var e = path_elem.clone();
 			var p = path_chunks[i];
 			for (var u=0; u < i; u++)
 				p = path_chunks[u] + "/" + p;
 			$(e).attr("href", "#"+p);
-			$(e).html(path_chunks[i]+"/");
+			if (i == path_chunks.length -1 ) {
+				$(e).html(path_chunks[i]);
+			} else {
+				$(e).html(path_chunks[i]+"/");
+			}
 			$(this).append(e);
 		}
 	});
@@ -168,6 +175,8 @@ function createElement(key, meta_data) {
 		if (meta_data["thumbnails"].length > 0) {
 			// Minimized view
 			{
+				console.log("thumb " + id + " " + meta_data["thumbnails"].length);
+				console.log(meta_data["thumbnails"])
 				var src = thumb_src_base + meta_data["thumbnails"][0]["name"];
 				var cap = meta_data["thumbnails"][0]["caption"];
 
@@ -200,6 +209,7 @@ function createElement(key, meta_data) {
 	$(elem).find(".license-target").html(meta_data["license"]);
 	$(elem).find(".notes-target").html(meta_data["notes"]);
 	$(elem).find(".acknowledgements-target").html(meta_data["acknowledgements"]);
+	$(elem).find(".link-target").html(meta_data["link"]);
 
 	// Update Citations
 	$(elem).find(".citations-container").html(function() {
