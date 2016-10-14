@@ -77,12 +77,9 @@
                   <a href="#">subsubfolder/</a>
                 </div>
                 <div class='tag-container crop' id="element-tag-container">
-                  <a href=""><span class='label label-info tag'>Tag1</span></a>
-                  <a href=""><span class='label label-info'>Tag2</span></a>
-                  <a href=""><span class='label label-info'>Tag3</span></a>
-                  <a href=""><span class='label label-info'>Tag4</span></a>
-                  <a href=""><span class='label label-info'>Tag5</span></a>
-                  <a href=""><span class='label label-info'>Extra long tag</span></a>
+                  <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
+                  <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
+                  <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
                 </div>
               </div>
               <div class="panel-body">
@@ -110,12 +107,9 @@
                   <a href="#">subsubfolder/</a>
                 </div>
                 <div class='tag-container'>
-                  <a href="#"><span class='label label-info'>Tag1</span></a>
-                  <a href="#"><span class='label label-info'>Tag2</span></a>
-                  <a href="#"><span class='label label-info'>Tag3</span></a>
-                  <a href="#"><span class='label label-info'>Tag4</span></a>
-                  <a href="#"><span class='label label-info'>Tag5</span></a>
-                  <a href="#"><span class='label label-info'>Extra long tag</span></a>
+                  <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
+                  <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
+                  <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
                 </div>
               </div>
               <div class='panel-body'>
@@ -193,28 +187,37 @@
                   <div class="panel-body collapse files-container" id="files-container">
                     <div class="panel panel-default">
                       <div class="panel-heading">
-                        <span class="files-name-target">File heading</span>
+                        <span class="files-description-target">Some description</span>
                       </div>
                       <div class="panel-body sub-panel">
                         <table class="table table-responsive table-striped files-container-table">
                           <tbody>
                             <tr>
-                              <th>Format</th>
-                              <td class="files-format-target">Some format</td>
+                              <th>Names</th>
+                              <td class="files-name-target">File heading</td>
                             </tr>
                             <tr>
-                              <th>Description</th>
-                              <td class="files-description-target">Some description</td>
+                              <th>Format</th>
+                              <td class="files-format-target">Some format</td>
                             </tr>
                             <tr>
                               <th>Resolution</th>
                               <td class="files-resolution-target">32x32x32</td>
                             </tr>
                             <tr>
+                              <th>Size</th>
+                              <td class="files-size-target">120 B</td>
+                            </tr>
+                            <tr>
                               <th>Files</th>
                               <td>
                                 <table class="files-filelist-container">
-                                  <tr><td><span class="files-filelist-name-target">filelist.file1</span></td><td><span class="files-filelist-size-target">120</span> B</td></tr>
+                                  <tr><td>
+                                    <span class="files-filelist-name-target">filelist.file1</span>
+                                  </td>
+                                  <td>
+                                    <span class="files-filelist-size-target">120 B</span>
+                                  </td></tr>
                                 </table>
                               </td>
                             </tr>
@@ -227,6 +230,32 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class='panel panel-default' id='taglist-container-elem'>
+        <div class="panel-heading">
+          <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#taglist-container" aria-expanded="false" aria-controls="taglist-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+          <span>Tags</span>
+        </div>
+        <div class="panel-body collapse taglist-container" id='taglist-container'>
+          <div id="taglists-taglistlist-container">
+            <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
+            <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
+            <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
+          </div>
+        </div>
+      </div>
+
+      <div class='panel panel-default' id='error-container-elem'>
+        <div class="panel-heading">
+          <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#error-container" aria-expanded="false" aria-controls="error-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+          <span>Errors</span>
+        </div>
+        <div class="panel-body collapse error-container" id='error-container'>
+          <ol id="errors-errorlist-container">
+            <li><span class="errors-errorlist-error-target">error</span></li>
+          </ol>
         </div>
       </div>
       <hr>

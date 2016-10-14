@@ -14,7 +14,8 @@ $action = { $path = $Event.SourceEventArgs.FullPath
             $changeType = $Event.SourceEventArgs.ChangeType
             $logline = "$(Get-Date), $changeType, $path"
             Add-content ".\log.txt" -value $logline
-            python.exe T:\orfan\orfan.py -p T:\orfan\data -d T:\orfan\html
+            $log = "$(python.exe T:\orfan\orfan.py -p T:\orfan\data -d T:\orfan\html)"
+            Add-content ".\log.txt" -value $log
           }
 ### DECIDE WHICH EVENTS SHOULD BE WATCHED + SET CHECK FREQUENCY  
 $created = Register-ObjectEvent $watcher "Created" -Action $action

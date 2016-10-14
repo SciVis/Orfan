@@ -33,6 +33,33 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
     $(this).ekkoLightbox();
 });
 
+function onTagClick(event) {
+	event.preventDefault();
+
+	var tag = $(this).attr("tag");
+	var $all_selected_matching_tags = $("#active-tag-container").find(".tag").filter(function() {
+		return $(this).attr("tag") === tag;
+	});
+	if ($all_selected_matching_tags.length > 0) return;
+
+	var new_elem = $(this).clone();
+	$(new_elem).html("<span class='glyphicons glyphicons-remove'></span>" + tag);
+
+	$(new_elem).off('click');
+	$(new_elem).on('click', function(event) {
+		event.preventDefault();
+		$(this).remove();
+		customFilterElements();
+		masonry_obj.layout();
+	});
+
+	// Append element
+	$("#active-tag-container").append(new_elem).append(" ");
+
+	customFilterElements();
+	masonry_obj.layout();
+}
+
 // Loads metalist containing references to all meta data
 function loadAndPopulateData() {
 
@@ -56,8 +83,55 @@ function loadAndPopulateData() {
 
 	// Remove example element
 	$("#example-element").remove();
+
+	// Add error list
+	var errors = data["errors"];
+	if (errors.length > 0) {
+		var error_cont = $("#errors-errorlist-container");
+		var errorlist_elem = $(error_cont).find(":first").clone();
+		$(error_cont).empty();
+		for (var u=0; u < errors.length; u++) {
+			var item = errorlist_elem.clone();
+			$(item).find(".errors-errorlist-error-target").html(errors[u]);
+			$(error_cont).append(item);
+		}
+	} else {
+		$("#error-container-elem").remove();
+	}
+
+	// Add tag list
+	var taglist = {};
+	for (var key in metas) {
+		if (metas[key]["tags"] != undefined) {
+			for (var i in metas[key]["tags"]) {
+				var tag = metas[key]["tags"][i]
+				if (taglist.hasOwnProperty(tag)) {
+					taglist[tag]++;
+				} else {
+					taglist[tag] = 1;
+				}
+			}
+		}
+	}
+	var taglist_cont = $("#taglists-taglistlist-container");
+	var taglist_elem = $(taglist_cont).find(":first").clone();
+	$(taglist_cont).empty();
+
+	for (var key in taglist) {
+		var item = taglist_elem.clone();
+		$(item).html(key + ": " + taglist[key]);
+		$(item).attr("tag", key);
+		$(taglist_cont).append(item);
+		$(taglist_cont).append(" ");
+		console.log(key + " : " + taglist[key]);
+		$(item).on('click', onTagClick);
+	}
 }
 
+function humanFileSize(size) {
+    var i = Math.floor( Math.log(size) / Math.log(1024) );
+    return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+};
 
 function createElement(key, meta_data) {
 	var example = document.getElementById("example-element");
@@ -136,35 +210,12 @@ function createElement(key, meta_data) {
 		$(this).empty();
 		for (var i=0; i < meta_data["tags"].length; i++) {
 			var e = tag_elem.clone();
-			$(e).find(".label").html(meta_data["tags"][i]);
+			$(e).html(meta_data["tags"][i]);
+			$(e).attr("tag", meta_data["tags"][i]);
 			$(this).append(e);
 			$(this).append(" ");
 
-			$(e).on('click', function(event) {
-				event.preventDefault();
-
-				var html = $(this).find(".tag").html();
-				var $find_all_tags_with_html = $("#active-tag-container").find(".tag").filter(function() {
-					return this.innerHTML === html;
-				});
-				if ($find_all_tags_with_html.length > 0)
-					return;
-
-				var new_elem = $(this).clone();
-				$(new_elem).off('click');
-				$(new_elem).on('click', function(event) {
-					event.preventDefault();
-					$(this).remove();
-					customFilterElements();
-					masonry_obj.layout();
-				});
-
-				// Append element
-				$("#active-tag-container").append(new_elem).append(" ");
-
-				customFilterElements();
-				masonry_obj.layout();
-			});
+			$(e).on('click', onTagClick);
 		}
 	});
 
@@ -175,8 +226,6 @@ function createElement(key, meta_data) {
 		if (meta_data["thumbnails"].length > 0) {
 			// Minimized view
 			{
-				console.log("thumb " + id + " " + meta_data["thumbnails"].length);
-				console.log(meta_data["thumbnails"])
 				var src = thumb_src_base + meta_data["thumbnails"][0]["name"];
 				var cap = meta_data["thumbnails"][0]["caption"];
 
@@ -249,7 +298,15 @@ function createElement(key, meta_data) {
 			// Flatten resolution elements to one string
 			var res = meta_data["files"][i]["resolution"].join().replace(/,/g, " x ");
 
-			$(e).find(".files-name-target").html(meta_data["files"][i]["name"]);
+			if (meta_data["files"][i]["name"] instanceof Array) {
+				names = meta_data["files"][i]["name"].join(", ");
+			} else {
+				names = meta_data["files"][i]["name"];
+			}
+
+			var totalFileSize = 0;
+
+			$(e).find(".files-name-target").html(names);
 			$(e).find(".files-format-target").html(meta_data["files"][i]["format"]);
 			$(e).find(".files-description-target").html(meta_data["files"][i]["description"]);
 			$(e).find(".files-resolution-target").html(res);
@@ -259,11 +316,13 @@ function createElement(key, meta_data) {
 				for (var u=0; u < meta_data["files"][i]["filelist"].length; u++) {
 					var f = filelist_elem.clone();
 					$(f).find(".files-filelist-name-target").html(meta_data["files"][i]["filelist"][u]["name"]);
-					$(f).find(".files-filelist-size-target").html(meta_data["files"][i]["filelist"][u]["size"]);
+					var filesize = meta_data["files"][i]["filelist"][u]["size"];
+					totalFileSize += filesize;
+					$(f).find(".files-filelist-size-target").html(humanFileSize(filesize));
 					$(this).append(f);
 				}
 			});
-
+			$(e).find(".files-size-target").html(humanFileSize(totalFileSize));
 			$(this).append(e);
 		}
 	});
@@ -324,8 +383,8 @@ function createElement(key, meta_data) {
 
 function extractTagsAsStrings(q_obj) {
 	var tag_array = [];
-	$(q_obj).find("span").each(function() {
-		tag_array.push(this.innerHTML);
+	$(q_obj).find(".tag").each(function() {
+		tag_array.push($(this).attr("tag"));
 	});
 
 	return tag_array;

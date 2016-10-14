@@ -27,7 +27,7 @@ The "meta.json" file contains a list of meta data that we have considered useful
  * __citations__ A list of papers that use this dataset. Note this is not the papers that you should site for acknowledgements, they are in the acknowledgements section. A citation contains a __type__ which can be either "plain", "DOI", or "BibTex". And a __payload__ holding the actual citation. 
  * __thumbnails__ (at least one required) A list of thumbnails for the dataset. A thumbnail contains a __filename__ and a __caption__. 
  * __files__ A list of the relevant files in the dataset. A item in the file list contains
-    * __name__ (required) The file name. This can be a pattern including wildcards to match multiple files at the same time. For example "dataset-???.dat" can be used to match a series of files. The supported wildcards can be found at https://docs.python.org/3/library/glob.html.
+    * __name__ (required) The file name. This can be a pattern including wildcards to match multiple files at the same time. For example "dataset-???.dat" can be used to match a series of files. The supported wildcards can be found at https://docs.python.org/3/library/glob.html. This can also be list of names / pattern. The complete list of matched files will be expanded automatically.
     * __description__ (required) information about the file.
     * __format__ data format.
     * __resolution__ resolution of the dataset of available.

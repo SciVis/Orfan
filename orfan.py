@@ -37,21 +37,19 @@ if __name__ == '__main__':
                        help='Destination dir of dataset gallery', default = "./html" )
     args = parser.parse_args()
 
-    meta, thumbnails = orfan.scraper.scrape(args.path)
+    meta, thumbnails, errors = orfan.scraper.scrape(args.path)
     with open(os.path.join(args.path, "software.json")) as f:
         software = json.load(f)
 
-    #if os.path.isdir(args.dest) : shutil.rmtree(args.dest)
     outputDir = mkdir(args.dest)
 
     with open(os.path.join(outputDir, "data.js"), 'w') as f:
         f.write("var data = ")
-        f.write(json.dumps({"datasets" : meta, "software" : software}, indent=4))
+        f.write(json.dumps({"datasets" : meta, "software" : software, "errors" : errors}, indent=4))
 
     for thumbnail in thumbnails:
-        if os.path.exists(os.path.join(args.path, thumbnail)):
-            os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),  exist_ok=True)
-            shutil.copyfile(os.path.join(args.path, thumbnail),
-                            os.path.join(outputDir, "thumbnails", thumbnail))
-        else: 
-            print("missing thumbnail: " + os.path.join(args.path, thumbnail))
+        os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),  exist_ok=True)
+        shutil.copyfile(os.path.join(args.path, thumbnail),
+                        os.path.join(outputDir, "thumbnails", thumbnail))
+
+
