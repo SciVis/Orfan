@@ -43,7 +43,7 @@ function onTagClick(event) {
 	if ($all_selected_matching_tags.length > 0) return;
 
 	var new_elem = $(this).clone();
-	$(new_elem).html("<span class='glyphicons glyphicons-remove'></span>" + tag);
+	$(new_elem).html("<span class='glyphicon glyphicon-remove'></span>" + tag);
 
 	$(new_elem).off('click');
 	$(new_elem).on('click', function(event) {
@@ -100,30 +100,33 @@ function loadAndPopulateData() {
 	}
 
 	// Add tag list
-	var taglist = {};
+	var tagcount = {};
 	for (var key in metas) {
 		if (metas[key]["tags"] != undefined) {
 			for (var i in metas[key]["tags"]) {
 				var tag = metas[key]["tags"][i]
-				if (taglist.hasOwnProperty(tag)) {
-					taglist[tag]++;
+				if (tagcount.hasOwnProperty(tag)) {
+					tagcount[tag]++;
 				} else {
-					taglist[tag] = 1;
+					tagcount[tag] = 1;
 				}
 			}
 		}
 	}
+	var sortedtags = [];
+	for(var tag in tagcount) {
+	    sortedtags[sortedtags.length] = tag;
+	}
+	sortedtags.sort();
+
 	var taglist_cont = $("#taglists-taglistlist-container");
 	var taglist_elem = $(taglist_cont).find(":first").clone();
 	$(taglist_cont).empty();
-
-	for (var key in taglist) {
+	for (var i in sortedtags) {
+		var tag = sortedtags[i];
 		var item = taglist_elem.clone();
-		$(item).html(key + ": " + taglist[key]);
-		$(item).attr("tag", key);
-		$(taglist_cont).append(item);
-		$(taglist_cont).append(" ");
-		console.log(key + " : " + taglist[key]);
+		$(item).attr("tag", tag).html("<span class='badge'>" + tagcount[tag] + "</span> " + tag );
+		$(taglist_cont).append(item).append(" ");
 		$(item).on('click', onTagClick);
 	}
 }

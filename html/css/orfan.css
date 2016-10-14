@@ -80,6 +80,11 @@
 
 .thumbnail {
 	margin-bottom: 0px;
+	border: 0px;
+}
+
+.thumbnail-preview {
+	padding: 5px;
 }
 
 .table {
@@ -94,6 +99,10 @@
 
 .active-tag-container {
 	width: 200px;
+}
+
+#taglists-taglistlist-container {
+    line-height: 200%;
 }
 
 /*body { padding-top: 70px; } */
