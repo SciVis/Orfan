@@ -14,6 +14,9 @@
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- Bootstrap XL extra -->
+  <link href="css/bootstrapxl.css" rel="stylesheet">
+
   <!-- Lightbox css -->
   <link href="css/ekko-lightbox.min.css" rel="stylesheet">
 
@@ -72,16 +75,18 @@
 
         <div class="col-sm-10 text-left"> 
           <div class="list grid element-container row" id="element-container">
-            <div class="element item col-xs-6 col-sm-4 col-md-3 col-lg-3 element-minimized" id='example-element'>
+            <div class="element item col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 element-minimized" id='example-element'>
               <div class="path" id='path' hidden>Base/Subfolder/subsubfolder/</div>
               <div class='min-view'>
                 <div class='panel panel-default'>
                   <div class='panel-heading'>
-                    <div>
-                      <button class="btn btn-s pull-right maximize-view"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></button>
-                      <h4 class="header-container title crop">This is the minimized view</h4>
-                    </div>
-                    <div class='path-container'>
+                  	<button class='btn btn-default maximize-view header-btn'>
+	                    <!--<div>-->
+	                      <!--<button class="btn btn-s pull-right maximize-view"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></button>-->
+	                      <h4 class="title crop">This is the minimized view</h4>
+	                    <!--</div>-->
+                    </button>
+                    <div class='path-container crop'>
                       <a href="#">Base/</a>
                       <a href="#">Subfolder/</a>
                       <a href="#">subsubfolder/</a>
@@ -170,7 +175,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class='panel panel-default'>
+                    <div class='panel panel-default citations-panel' id='citations-panel'>
                       <div class="panel-heading">
                         <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#citations-container-div" aria-expanded="false" aria-controls="citations-container-div"><span class="glyphicon glyphicon-option-horizontal"></span></button>
                         <span>Citations</span>
@@ -186,7 +191,7 @@
                         </table>
                       </div>
                     </div>
-                    <div class='panel panel-default'>
+                    <div class='panel panel-default' id='files-panel'>
                       <div class="panel-heading">
                         <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#files-container" aria-expanded="false" aria-controls="files-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
                         <span>Files</span>
@@ -265,10 +270,10 @@
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/ekko-lightbox.min.js"></script>
-    <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="js/list.min.js"></script>
     <script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
     <script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="js/orfan.js"></script>
   </body>
 </html>

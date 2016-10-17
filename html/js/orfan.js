@@ -1,21 +1,37 @@
+// GLOBAL CONSTANTS
+const ANIMATION_SCROLL_SPEED_MS = 200;
+
+// GLOBAL OBJECTS
 var masonry_obj;
+var element_target = undefined;
 
 $(document).ready(function() {
 	// --- LOAD DATA ---
 	loadAndPopulateData();
 
 	// --- INIT EXTERNAL OBJECTS ---
-
 	// Masonry
 	masonry_obj = new Masonry('.grid', {
 	  // options
 	  itemSelector: '.item',
-	  columnWidth: '.element:not([style*="display: none"])'
+	  columnWidth: '.element-minimized:not([style*="display: none"])' // Use first visible minimized-element as columnWidth reference
 	});
 
 	// layout Masonry after each image loads
 	imagesLoaded(masonry_obj, function() {
 		masonry_obj.layout();
+	});
+
+	// Add animated scroll to layout complete
+	masonry_obj.on( 'layoutComplete', function(e) {
+		if (element_target !== undefined) {
+			// Subtract offset because of navbar
+			const offset = $('#element-container').offset().top;
+			$('html, body').animate({ scrollTop: $(element_target).offset().top - offset }, ANIMATION_SCROLL_SPEED_MS);
+			// Make sure this is done only once
+			element_target = undefined;
+			return false;
+		}
 	});
 
 	// List
@@ -26,11 +42,12 @@ $(document).ready(function() {
 	listObj.on("searchComplete", function() {
 		masonry_obj.layout();
 	})
-});
 
-$(document).on('click', '[data-toggle="lightbox"]', function(event) {
-    event.preventDefault();
-    $(this).ekkoLightbox();
+	// Lightbox
+	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+	    event.preventDefault();
+	    $(this).ekkoLightbox();
+	});
 });
 
 function onTagClick(event) {
@@ -86,7 +103,7 @@ function loadAndPopulateData() {
 
 	// Add error list
 	var errors = data["errors"];
-	if (errors.length > 0) {
+	if (errors !== undefined && errors.length > 0) {
 		var error_cont = $("#errors-errorlist-container");
 		var errorlist_elem = $(error_cont).find(":first").clone();
 		$(error_cont).empty();
@@ -132,6 +149,10 @@ function loadAndPopulateData() {
 }
 
 function humanFileSize(size) {
+	// Guard against 0 => NaN undefined
+	if (size == 0)
+		return "";
+
     var i = Math.floor( Math.log(size) / Math.log(1024) );
     return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
 };
@@ -194,15 +215,15 @@ function createElement(key, meta_data) {
 		var path_chunks = key.split("/");
 		for (var i=0; i < path_chunks.length ; i++) {
 			var e = path_elem.clone();
-			var p = path_chunks[i];
-			for (var u=0; u < i; u++)
-				p = path_chunks[u] + "/" + p;
+			var p = path_chunks[0];
+			for (var u=1; u <= i; u++)
+				p = p + "/" + path_chunks[u];
+
 			$(e).attr("href", "#"+p);
-			if (i == path_chunks.length -1 ) {
-				$(e).html(path_chunks[i]);
-			} else {
-				$(e).html(path_chunks[i]+"/");
-			}
+			$(e).html(path_chunks[i]);
+			if (i < path_chunks.length-1)
+				$(e).append("/");
+
 			$(this).append(e);
 		}
 	});
@@ -264,76 +285,94 @@ function createElement(key, meta_data) {
 	$(elem).find(".link-target").html(meta_data["link"]);
 
 	// Update Citations
-	$(elem).find(".citations-container").html(function() {
-		var cit_elem = $(this).find(":first").clone();
-		$(this).empty();
-		for (var i=0; i < meta_data["citations"].length; i++) {
-			var e = cit_elem.clone();
-			$(e).find(".payload-target").html(meta_data["citations"][i]["payload"]);
-			$(e).find(".type-target").html(meta_data["citations"][i]["type"]);
-			$(this).append(e);
-		}
-	});
+	if (meta_data["citations"].length > 0) {
+		$(elem).find(".citations-container").html(function() {
+			var cit_elem = $(this).find(":first").clone();
+			$(this).empty();
+			for (var i=0; i < meta_data["citations"].length; i++) {
+				var e = cit_elem.clone();
+				$(e).find(".payload-target").html(meta_data["citations"][i]["payload"]);
+				$(e).find(".type-target").html(meta_data["citations"][i]["type"]);
+				$(this).append(e);
+			}
+		});
+	}
+	else {
+		$(elem).find("#citations-panel").remove();
+	}
 
 	// Update Files
-	var fc = $(elem).find(".files-container").html(function() {
-		var file_elem = $(this).find(":first").clone();
-		$(this).empty();
-		for (var i=0; i < meta_data["files"].length; i++) {
-			var e = file_elem.clone();
+	if (meta_data["files"].length > 0) {
+		var fc = $(elem).find(".files-container").html(function() {
+			var file_elem = $(this).find(":first").clone();
+			$(this).empty();
+			for (var i=0; i < meta_data["files"].length; i++) {
+				var e = file_elem.clone();
 
-			// Set default values
-			if (meta_data["files"][i]["resolution"] == undefined)
-				meta_data["files"][i]["resolution"] = [];
+				// Set default values
+				if (meta_data["files"][i]["resolution"] == undefined)
+					meta_data["files"][i]["resolution"] = [];
 
-			if (meta_data["files"][i]["name"] == undefined)
-				meta_data["files"][i]["name"] = "";
+				if (meta_data["files"][i]["name"] == undefined)
+					meta_data["files"][i]["name"] = "";
 
-			if (meta_data["files"][i]["format"] == undefined)
-				meta_data["files"][i]["format"] = "";
+				if (meta_data["files"][i]["format"] == undefined)
+					meta_data["files"][i]["format"] = "";
 
-			if (meta_data["files"][i]["description"] == undefined)
-				meta_data["files"][i]["description"] = "";
+				if (meta_data["files"][i]["description"] == undefined)
+					meta_data["files"][i]["description"] = "";
 
-			if (meta_data["files"][i]["filelist"] == undefined)
-				meta_data["files"][i]["filelist"] = [];
+				if (meta_data["files"][i]["filelist"] == undefined)
+					meta_data["files"][i]["filelist"] = [];
 
-			// Flatten resolution elements to one string
-			var res = meta_data["files"][i]["resolution"].join().replace(/,/g, " x ");
+				// Flatten resolution elements to one string
+				var res = meta_data["files"][i]["resolution"].join().replace(/,/g, " x ");
 
-			if (meta_data["files"][i]["name"] instanceof Array) {
-				names = meta_data["files"][i]["name"].join(", ");
-			} else {
-				names = meta_data["files"][i]["name"];
-			}
-
-			var totalFileSize = 0;
-
-			$(e).find(".files-name-target").html(names);
-			$(e).find(".files-format-target").html(meta_data["files"][i]["format"]);
-			$(e).find(".files-description-target").html(meta_data["files"][i]["description"]);
-			$(e).find(".files-resolution-target").html(res);
-			$(e).find(".files-filelist-container").html(function() {
-				var filelist_elem = $(this).find(":first").clone();
-				$(this).empty();
-				for (var u=0; u < meta_data["files"][i]["filelist"].length; u++) {
-					var f = filelist_elem.clone();
-					$(f).find(".files-filelist-name-target").html(meta_data["files"][i]["filelist"][u]["name"]);
-					var filesize = meta_data["files"][i]["filelist"][u]["size"];
-					totalFileSize += filesize;
-					$(f).find(".files-filelist-size-target").html(humanFileSize(filesize));
-					$(this).append(f);
+				if (meta_data["files"][i]["name"] instanceof Array) {
+					names = meta_data["files"][i]["name"].join(", ");
+				} else {
+					names = meta_data["files"][i]["name"];
 				}
-			});
-			$(e).find(".files-size-target").html(humanFileSize(totalFileSize));
-			$(this).append(e);
-		}
-	});
+
+				var totalFileSize = 0;
+
+				$(e).find(".files-name-target").html(names);
+				$(e).find(".files-format-target").html(meta_data["files"][i]["format"]);
+				$(e).find(".files-description-target").html(meta_data["files"][i]["description"]);
+				$(e).find(".files-resolution-target").html(res);
+				$(e).find(".files-filelist-container").html(function() {
+					var filelist_elem = $(this).find(":first").clone();
+					$(this).empty();
+					for (var u=0; u < meta_data["files"][i]["filelist"].length; u++) {
+						var fle = filelist_elem.clone();
+						var fli = meta_data["files"][i]["filelist"][u];
+
+						// Provide meaningful default values
+						if (fli["name"] == undefined)
+							fli["name"] = "";
+						if (fli["size"] == undefined)
+							fli["size"] = 0;
+
+						totalFileSize += fli["size"];
+
+						$(fle).find(".files-filelist-name-target").html(fli["name"]);
+						$(fle).find(".files-filelist-size-target").html(humanFileSize(fli["size"]));
+						$(this).append(fle);
+					}
+				});
+				$(e).find(".files-size-target").html(humanFileSize(totalFileSize));
+				$(this).append(e);
+			}
+		});
+	}
+	else {
+		$(elem).find("#files-panel").remove();
+	}
 
 	// --- FUNCTIONALITY ---
 
-	const minimized_class_list = "col-xs-6 col-sm-4 col-md-3 col-lg-3 element-minimized";
-	const maximized_class_list = "col-xs-12 element-maximized";
+	const minimized_class_list = "col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 element-minimized";
+	const maximized_class_list = "col-xs-12 col-lg-6 element-maximized";
 
 	// Implement hide show
 	$(elem).find(".maximize-view").on("click", function() {
@@ -341,6 +380,8 @@ function createElement(key, meta_data) {
 		$(".element").removeClass(maximized_class_list).addClass(minimized_class_list);
 		// Set active element to maximized
 		$(elem).removeClass(minimized_class_list).addClass(maximized_class_list);
+
+		element_target = elem;
 
 		$(".max-view").hide();
 		$(".min-view").show();
@@ -353,12 +394,12 @@ function createElement(key, meta_data) {
 	$(elem).find(".minimize-view").on("click", function() {
 		$(elem).removeClass(maximized_class_list).addClass(minimized_class_list);
 
+		element_target = undefined;
+
 		$(".max-view").hide();
 		$("#"+id+" .min-view").show();
 
 		masonry_obj.layout();
-		
-		//$('html, body').stop().animate({ scrollTop: $("#"+id).offset().top }, 200);
 	})
 
 	// Update collapse references
@@ -394,6 +435,7 @@ function extractTagsAsStrings(q_obj) {
 }
 
 // Returns true if all strings within filter_tags are represented in element_tags
+// TODO: Use hash-table to identify tags?
 function filterTags(element_tags, filter_tags) {
 	for (var i = filter_tags.length - 1; i >= 0; i--) {
 		var listed = false;
@@ -419,10 +461,8 @@ function customFilterElements() {
 
 	$(".element").filter(function() {
 		var element_tag_array = extractTagsAsStrings($(this).find("#element-tag-container"));
-
 		var q1 = $(this).find("#path:contains('"+path+"')").length > 0;
 		var q2 = filterTags(element_tag_array, filter_tag_array);
-
 		return q1 && q2;
 	}).show();
 }
@@ -438,12 +478,13 @@ $(window).on('hashchange', function() {
 	var path_chunks = hash.split("/");
 
 	for (var i=0; i < path_chunks.length; i++) {
-		var p = path_chunks[i];
-		if (p.length == 0)
+		if (path_chunks[i].length == 0)
 			continue;
 
-		for (var u=0; u < i; u++)
-			p = path_chunks[u] + "/" + p;
+		var p = path_chunks[0];
+		for (var u=1; u <= i; u++)
+			p = p + "/" + path_chunks[u];
+
 		$('#breadcrumb').append("<li><a href='#"+p+"'>"+path_chunks[i]+"</a></li>");
 	}
 

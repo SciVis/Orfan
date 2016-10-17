@@ -41,6 +41,15 @@
 	margin: 2px;
 }
 
+.header-btn {
+	width:100%;
+	padding: 5px;
+}
+
+.header-btn h4 {
+	margin: 2px;
+}
+
 .info-container-table th {
 	width: 15%;
 }
@@ -55,6 +64,10 @@
 
 .panel-heading {
 	padding: 5px 15px;
+}
+
+.min-view .panel-heading {
+	padding: 5px 5px;
 }
 
 .thumbnail-container {
