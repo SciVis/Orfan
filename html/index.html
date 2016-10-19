@@ -17,9 +17,6 @@
   <!-- Bootstrap XL extra -->
   <link href="css/bootstrapxl.css" rel="stylesheet">
 
-  <!-- Lightbox css -->
-  <link href="css/ekko-lightbox.min.css" rel="stylesheet">
-
   <!-- Custom styles our application -->
   <link href="css/orfan.css" rel="stylesheet">
 
@@ -63,28 +60,27 @@
 
     <div class="container-fluid">
       <div class="row content">
-        <div class="col-sm-2 sidenav element-container">
-          <div class="" id="active-tag-container">
+        <div class="col-sm-2 sidenav navbar-margin">
+          <div id="active-tag-container">
+            <button type="button" id="active-tag-base" class="tag btn btn-info btn-xs" tag='Tag1'><span class='glyphicon glyphicon-remove'></span><span id="tag-caption-target">Tag1</span></button>
           </div>
+          <br>
           <div id="taglists-taglistlist-container">
-            <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
-            <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
-            <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
+            <button type="button" id="counted-tag-base" class="tag btn btn-info btn-xs" tag='Tag1'><span class='badge' id="count-target">1</span> <span id="caption-target">Tag1</span></button>
           </div>
         </div>
 
-        <div class="col-sm-10 text-left"> 
-          <div class="list grid element-container row" id="element-container">
-            <div class="element item col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 element-minimized" id='example-element'>
+        <div class="col-sm-10 text-left">
+          <div class="" id="modal-container">
+          </div>
+          <div class="list grid navbar-margin row" id="element-container">
+            <div class="element item col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 element-minimized" id='element-base'>
               <div class="path" id='path' hidden>Base/Subfolder/subsubfolder/</div>
               <div class='min-view'>
                 <div class='panel panel-default'>
                   <div class='panel-heading'>
-                  	<button class='btn btn-default maximize-view header-btn'>
-	                    <!--<div>-->
-	                      <!--<button class="btn btn-s pull-right maximize-view"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></button>-->
-	                      <h4 class="title crop">This is the minimized view</h4>
-	                    <!--</div>-->
+                  	<button class='btn btn-default maximize-view header-btn' data-toggle="modal" data-target="modal-base">
+	                   <h4 class="title crop">This is the minimized view</h4>
                     </button>
                     <div class='path-container crop'>
                       <a href="#">Base/</a>
@@ -92,156 +88,159 @@
                       <a href="#">subsubfolder/</a>
                     </div>
                     <div class='tag-container crop' id="element-tag-container">
-                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
+                      <button type="button" class="tag btn btn-info btn-xs" id="tag-base" tag='Tag1'>Tag1</button>
                       <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
                       <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
                     </div>
                   </div>
                   <div class="thumbnail-preview panel-body" >
                     <div class="thumbnail">
-                      <a href="img/no_img.png" data-toggle="lightbox" data-footer="This is the thumbnail description">
+                      <a href="#" data-toggle="modal" data-target="modal-base">
                         <img class="img-fluid" src="img/no_img.png" alt="">
                       </a>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class='max-view'>
-                <div class='panel panel-default'>
-                  <div class='panel-heading'>
-                    <div>
-                      <button class="btn btn-default btn-s pull-right minimize-view"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
-                      <h4 class="header-container title">This is the maximized view</h4>
-                    </div>
-                    <div class='path-container'>
-                      <a href="#" class="path-container-element">Base/</a>
-                      <a href="#">Subfolder/</a>
-                      <a href="#">subsubfolder/</a>
-                    </div>
-                    <div class='tag-container'>
-                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
-                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
-                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
-                    </div>
-                  </div>
-                  <div class='panel-body'>
-                    <div class="panel-body row thumbnail-container collapse in" id="thumbnail-container">
-                      <div class='col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 thumbnail-div'>
-                        <div class='thumbnail'>
-                          <a href="img/no_img.png" data-toggle="lightbox" data-footer="This is the thumbnail description" data-gallery="id-will-be-used-here">
-                            <img class='img-fluid' src='img/no_img.png' alt=''>
-                          </a>
-                          <div class='caption text-center'>
-                            <span class="caption-target">This is a thumbnail description</span>
+              <!-- Modal -->
+			  <div class="modal fade" id="modal-base" role="dialog">
+			    <div class="modal-dialog">
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			        <div class="modal-header">
+                      <div class="modal-control-panel">
+                          <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                          <button type="button" class="close" data-action="next-modal"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                          <button type="button" class="close" data-action="prev-modal"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+                      </div>
+			          <h4 class="modal-title title text-center">Modal Header</h4>
+	                    <div class='path-container'>
+	                      <a href="#" class="path-container-element">Base/</a>
+	                      <a href="#">Subfolder/</a>
+	                      <a href="#">subsubfolder/</a>
+	                    </div>
+	                    <div class='tag-container'>
+	                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
+	                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
+	                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
+	                    </div>
+			        </div>
+			        <div class="modal-body">
+                        <div class="panel-body row thumbnail-container" id="thumbnail-container">
+                          <div class='col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 thumbnail-div'>
+                            <div class='thumbnail'>
+                              <a href="img/no_img.png" data-footer="This is the thumbnail description" data-gallery="id-will-be-used-here">
+                                <img class='img-fluid' src='img/no_img.png' alt=''>
+                              </a>
+                              <div class='caption text-center'>
+                                <span class="caption-target">This is a thumbnail description</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="panel-body sub-panel collapse in" id="info-container">
-                      <table class="table table-striped info-container-table">
-                        <tbody>
-                          <tr>
-                            <th>Description</th>
-                            <td class='description-target'>this is a description</td>
-                          </tr>
-                          <tr>
-                            <th>Origin</th>
-                            <td class='origin-target'>from mister X</td>
-                          </tr>
-                          <tr>
-                            <th>Contact</th>
-                            <td class='contact-target'>niklas@liu.se</td>
-                          </tr>
-                          <tr>
-                            <th>License</th>
-                            <td class='license-target'>Free</td>
-                          </tr>
-                          <tr>
-                            <th>Notes</th>
-                            <td class='notes-target'>this is a note</td>
-                          </tr>
-                          <tr>
-                            <th>Acknowledgements</th>
-                            <td class='acknowledgements-target'>thank you mister x</td>
-                          </tr>
-                          <tr>
-                            <th>Link</th>
-                            <td class='link-target'>this is a link</td>
-                          </tr>
-                          <tr>
-                            <th>Software</th>
-                            <td class='software-target'>Inviwo</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class='panel panel-default citations-panel' id='citations-panel'>
-                      <div class="panel-heading">
-                        <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#citations-container-div" aria-expanded="false" aria-controls="citations-container-div"><span class="glyphicon glyphicon-option-horizontal"></span></button>
-                        <span>Citations</span>
-                      </div>
-                      <div class="panel-body sub-panel collapse" id="citations-container-div">
-                        <table class="table table-striped citations-container-table">
-                          <tbody class="citations-container">
-                            <tr>
-                              <td class="payload-target">@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}</td>
-                              <td class="type-target">BibTex</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class='panel panel-default' id='files-panel'>
-                      <div class="panel-heading">
-                        <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#files-container" aria-expanded="false" aria-controls="files-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
-                        <span>Files</span>
-                      </div>
-                      <div class="panel-body collapse files-container" id="files-container">
-                        <div class="panel panel-default">
+                        <div class="panel-body sub-panel collapse in" id="info-container">
+                          <table class="table table-striped info-container-table">
+                            <tbody>
+                              <tr>
+                                <th>Description</th>
+                                <td class='description-target'>this is a description</td>
+                              </tr>
+                              <tr>
+                                <th>Origin</th>
+                                <td class='origin-target'>from mister X</td>
+                              </tr>
+                              <tr>
+                                <th>Contact</th>
+                                <td class='contact-target'>niklas@liu.se</td>
+                              </tr>
+                              <tr>
+                                <th>License</th>
+                                <td class='license-target'>Free</td>
+                              </tr>
+                              <tr>
+                                <th>Notes</th>
+                                <td class='notes-target'>this is a note</td>
+                              </tr>
+                              <tr>
+                                <th>Acknowledgements</th>
+                                <td class='acknowledgements-target'>thank you mister x</td>
+                              </tr>
+                              <tr>
+                                <th>Link</th>
+                                <td class='crop'><a class='link-target' href='' target='_blank'>this is a link</a></td>
+                              </tr>
+                              <tr>
+                                <th>Software</th>
+                                <td class='software-target'>Inviwo</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class='panel panel-default citations-panel' id='citations-panel'>
                           <div class="panel-heading">
-                            <span class="files-description-target">Some description</span>
+                            <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#citations-container-div" aria-expanded="false" aria-controls="citations-container-div"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+                            <span>Citations</span>
                           </div>
-                          <div class="panel-body sub-panel">
-                            <table class="table table-responsive table-striped files-container-table">
-                              <tbody>
+                          <div class="panel-body sub-panel collapse" id="citations-container-div">
+                            <table class="table table-striped citations-container-table">
+                              <tbody class="citations-container">
                                 <tr>
-                                  <th>Names</th>
-                                  <td class="files-name-target">File heading</td>
-                                </tr>
-                                <tr>
-                                  <th>Format</th>
-                                  <td class="files-format-target">Some format</td>
-                                </tr>
-                                <tr>
-                                  <th>Resolution</th>
-                                  <td class="files-resolution-target">32x32x32</td>
-                                </tr>
-                                <tr>
-                                  <th>Size</th>
-                                  <td class="files-size-target">120 B</td>
-                                </tr>
-                                <tr>
-                                  <th>Files</th>
-                                  <td>
-                                    <table class="files-filelist-container">
-                                      <tr><td>
-                                        <span class="files-filelist-name-target">filelist.file1</span>
-                                      </td>
-                                      <td>
-                                        <span class="files-filelist-size-target">120 B</span>
-                                      </td></tr>
-                                    </table>
-                                  </td>
+                                  <td class="payload-target">@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}</td>
+                                  <td class="type-target">BibTex</td>
                                 </tr>
                               </tbody>
                             </table>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                        <div class='' id='file-element-container'>
+                            <div class="panel panel-default" id='file-element'>
+                              <div class="panel-heading">
+                                <span class="file-element-description-target">Some description</span>
+                                <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#file-element-body" aria-expanded="false" aria-controls="file-element-body"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+                              </div>
+                              <div class="panel-body collapse sub-panel" id="file-element-body">
+                                <table class="table table-responsive table-striped file-element-table">
+                                  <tbody>
+                                    <tr>
+                                      <th>Names</th>
+                                      <td class="file-element-name-target">File heading</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Format</th>
+                                      <td class="file-element-format-target">Some format</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Resolution</th>
+                                      <td class="file-element-resolution-target">32x32x32</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Size</th>
+                                      <td class="file-element-size-target">120 B</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Files</th>
+                                      <td>
+                                        <table class="file-element-filelist-container">
+                                          <tr>
+    	                                    <td>
+    	                                      <span class="file-element-filelist-name-target">filelist.file1</span>
+    	                                    </td>
+    	                                    <td>
+    	                                      <span class="file-element-filelist-size-target">120 B</span>
+    	                                    </td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>  <!-- file element -->
+                        </div> <!-- file element container -->
+		            </div> <!-- modal body -->
+			      </div>
+			    </div>
+			  </div>
             </div>
           </div>
 
@@ -269,7 +268,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/ekko-lightbox.min.js"></script>
     <script type="text/javascript" src="js/list.min.js"></script>
     <script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
     <script type="text/javascript" src="js/masonry.pkgd.min.js"></script>

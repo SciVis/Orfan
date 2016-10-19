@@ -1,13 +1,35 @@
-// GLOBAL CONSTANTS
-const ANIMATION_SCROLL_SPEED_MS = 200;
-
 // GLOBAL OBJECTS
 var masonry_obj;
-var element_target = undefined;
+
+// TEMPLATE BASE OBJECTS
+var element_base;
+var modal_base;
+var tag_base;
+var active_tag_base;
+var counted_tag_base;
 
 $(document).ready(function() {
+	// --- CLONE & SETUP REFERENCE BASE ELEMENTS FROM HTML ---
+	element_base = $("#element-base").clone();
+	$("#element-base").remove();
+
+	modal_base = $("#modal_base").clone();
+	$("#modal-base").remove();
+
+	tag_base = $("#tag-base").clone();
+	$("#tag-base").remove();
+
+	active_tag_base = $("#active-tag-base").clone();
+	$("#active-tag-base").remove();
+
+	counted_tag_base = $("#counted-tag-base").clone();
+	$("#counted-tag-base").remove();
+
 	// --- LOAD DATA ---
 	loadAndPopulateData();
+
+	// --- UPDATE TAGS ---
+	updateTagList();
 
 	// --- INIT EXTERNAL OBJECTS ---
 	// Masonry
@@ -17,22 +39,11 @@ $(document).ready(function() {
 	  columnWidth: '.element-minimized:not([style*="display: none"])' // Use first visible minimized-element as columnWidth reference
 	});
 
-	// layout Masonry after each image loads
-	imagesLoaded(masonry_obj, function() {
-		masonry_obj.layout();
-	});
-
-	// Add animated scroll to layout complete
-	masonry_obj.on( 'layoutComplete', function(e) {
-		if (element_target !== undefined) {
-			// Subtract offset because of navbar
-			const offset = $('#element-container').offset().top;
-			$('html, body').animate({ scrollTop: $(element_target).offset().top - offset }, ANIMATION_SCROLL_SPEED_MS);
-			// Make sure this is done only once
-			element_target = undefined;
-			return false;
-		}
-	});
+	// layout Masonry after images are loaded
+	$("#element-container").imagesLoaded()
+		.done(function() {
+			masonry_obj.layout();
+		});
 
 	// List
 	var listObj = new List('body', {
@@ -89,17 +100,17 @@ function loadAndPopulateData() {
 	}
 
 	// Hide the template element and apply default values that will be copied into the clones
-	$("#example-element").hide();
-	$("#example-element .max-view").hide();
-	$("#example-element").find('[data-toggle="lightbox"]').attr("data-footer", "");
+	//$("#element-base").hide();
+	//$("#element-base .max-view").hide();
+	//$("#element-base").find('[data-toggle="lightbox"]').attr("data-footer", "");
 
-	var container = document.getElementById("element-container");
+	var container = $("#element-container");
 	for (var key in metas) {
-		container.appendChild(createElement(key, metas[key]));
+		container.append(createElement(key, metas[key]));
 	}
 
 	// Remove example element
-	$("#example-element").remove();
+	//$("#element-base").remove();
 
 	// Add error list
 	var errors = data["errors"];
@@ -115,21 +126,20 @@ function loadAndPopulateData() {
 	} else {
 		$("#error-container-elem").remove();
 	}
+}
 
-	// Add tag list
+function updateTagList() {
+	var taglist = getVisibleElementTagsMinusActiveTags();
+
 	var tagcount = {};
-	for (var key in metas) {
-		if (metas[key]["tags"] != undefined) {
-			for (var i in metas[key]["tags"]) {
-				var tag = metas[key]["tags"][i]
-				if (tagcount.hasOwnProperty(tag)) {
-					tagcount[tag]++;
-				} else {
-					tagcount[tag] = 1;
-				}
-			}
-		}
+	for (var i=0; i < taglist.length; i++) {
+		var tag = taglist[i];
+		if (tagcount.hasOwnProperty(tag))
+			tagcount[tag]++;
+		else
+			tagcount[tag] = 1;
 	}
+
 	var sortedtags = [];
 	for(var tag in tagcount) {
 	    sortedtags[sortedtags.length] = tag;
@@ -137,14 +147,15 @@ function loadAndPopulateData() {
 	sortedtags.sort();
 
 	var taglist_cont = $("#taglists-taglistlist-container");
-	var taglist_elem = $(taglist_cont).find(":first").clone();
 	$(taglist_cont).empty();
 	for (var i in sortedtags) {
 		var tag = sortedtags[i];
-		var item = taglist_elem.clone();
-		$(item).attr("tag", tag).html("<span class='badge'>" + tagcount[tag] + "</span> " + tag );
-		$(taglist_cont).append(item).append(" ");
+		var item = counted_tag_base.clone();
+		$(item).attr("tag", tag);
+		$(item).find("#count-target").html(tagcount[tag]);
+		$(item).find("#caption-target").html(tag);
 		$(item).on('click', onTagClick);
+		$(taglist_cont).append(item).append(" ");
 	}
 }
 
@@ -158,8 +169,7 @@ function humanFileSize(size) {
 };
 
 function createElement(key, meta_data) {
-	var example = document.getElementById("example-element");
-	var elem = example.cloneNode(true);
+	var elem = $(element_base).clone(true);
 
 	var id = key.replace(/\//g, "-");
 	id = id.replace(/\\/g, "-");
@@ -253,7 +263,7 @@ function createElement(key, meta_data) {
 				var src = thumb_src_base + meta_data["thumbnails"][0]["name"];
 				var cap = meta_data["thumbnails"][0]["caption"];
 
-				$(elem).find(".thumbnail-preview a").attr("href", src).attr("data-footer", cap);
+				$(elem).find(".thumbnail-preview a").attr("data-footer", cap);
 				$(elem).find(".thumbnail-preview img").attr("src", src);
 			}
 
@@ -283,6 +293,7 @@ function createElement(key, meta_data) {
 	$(elem).find(".notes-target").html(meta_data["notes"]);
 	$(elem).find(".acknowledgements-target").html(meta_data["acknowledgements"]);
 	$(elem).find(".link-target").html(meta_data["link"]);
+	$(elem).find(".link-target").attr("href", meta_data["link"]);
 
 	// Update Citations
 	if (meta_data["citations"].length > 0) {
@@ -296,6 +307,14 @@ function createElement(key, meta_data) {
 				$(this).append(e);
 			}
 		});
+
+		// Set unique ID for collapse target
+		var collapse_button = $(elem).find(".btn[data-toggle='collapse']");
+		var collapse_target = $(elem).find(collapse_button.attr("data-target"));
+		var new_id = id + "-citations-container";
+
+		collapse_button.attr("data-target", "#" + new_id);
+		collapse_target.attr("id", new_id)
 	}
 	else {
 		$(elem).find("#citations-panel").remove();
@@ -303,11 +322,11 @@ function createElement(key, meta_data) {
 
 	// Update Files
 	if (meta_data["files"].length > 0) {
-		var fc = $(elem).find(".files-container").html(function() {
-			var file_elem = $(this).find(":first").clone();
+		var fc = $(elem).find("#file-element-container").html(function() {
+			var file_elem = $(this).find(":first").clone(true);
 			$(this).empty();
 			for (var i=0; i < meta_data["files"].length; i++) {
-				var e = file_elem.clone();
+				var e = file_elem.clone(true);
 
 				// Set default values
 				if (meta_data["files"][i]["resolution"] == undefined)
@@ -320,7 +339,7 @@ function createElement(key, meta_data) {
 					meta_data["files"][i]["format"] = "";
 
 				if (meta_data["files"][i]["description"] == undefined)
-					meta_data["files"][i]["description"] = "";
+					meta_data["files"][i]["description"] = "undefined";
 
 				if (meta_data["files"][i]["filelist"] == undefined)
 					meta_data["files"][i]["filelist"] = [];
@@ -336,11 +355,11 @@ function createElement(key, meta_data) {
 
 				var totalFileSize = 0;
 
-				$(e).find(".files-name-target").html(names);
-				$(e).find(".files-format-target").html(meta_data["files"][i]["format"]);
-				$(e).find(".files-description-target").html(meta_data["files"][i]["description"]);
-				$(e).find(".files-resolution-target").html(res);
-				$(e).find(".files-filelist-container").html(function() {
+				$(e).find(".file-element-name-target").html(names);
+				$(e).find(".file-element-format-target").html(meta_data["files"][i]["format"]);
+				$(e).find(".file-element-description-target").html(meta_data["files"][i]["description"]);
+				$(e).find(".file-element-resolution-target").html(res);
+				$(e).find(".file-element-filelist-container").html(function() {
 					var filelist_elem = $(this).find(":first").clone();
 					$(this).empty();
 					for (var u=0; u < meta_data["files"][i]["filelist"].length; u++) {
@@ -355,12 +374,20 @@ function createElement(key, meta_data) {
 
 						totalFileSize += fli["size"];
 
-						$(fle).find(".files-filelist-name-target").html(fli["name"]);
-						$(fle).find(".files-filelist-size-target").html(humanFileSize(fli["size"]));
+						$(fle).find(".file-element-filelist-name-target").html(fli["name"]);
+						$(fle).find(".file-element-filelist-size-target").html(humanFileSize(fli["size"]));
 						$(this).append(fle);
 					}
 				});
-				$(e).find(".files-size-target").html(humanFileSize(totalFileSize));
+
+				// Set unique ID for collapse target
+				var collapse_button = $(e).find(".btn[data-toggle='collapse']");
+				var collapse_target = $(e).find(collapse_button.attr("data-target"));
+				var new_id = id + "-file-element-body-" + i;
+
+				collapse_button.attr("data-target", "#" + new_id);
+				collapse_target.attr("id", new_id);
+
 				$(this).append(e);
 			}
 		});
@@ -371,58 +398,67 @@ function createElement(key, meta_data) {
 
 	// --- FUNCTIONALITY ---
 
-	const minimized_class_list = "col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 element-minimized";
-	const maximized_class_list = "col-xs-12 col-lg-6 element-maximized";
+	// Update modal targets
+	const modal_id = id + "-modal";
+	$(elem).find(".modal").attr("id", modal_id);
+	$(elem).find("[data-toggle='modal']").attr("data-target", "#"+modal_id);
 
-	// Implement hide show
-	$(elem).find(".maximize-view").on("click", function() {
-		// Set all elements to minimized
-		$(".element").removeClass(maximized_class_list).addClass(minimized_class_list);
-		// Set active element to maximized
-		$(elem).removeClass(minimized_class_list).addClass(maximized_class_list);
+	const minimize_class_list = "col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
+	const maximize_class_list = "col-xs-12";
+	// Setup functionality of thumbnails
+	$(elem).find(".thumbnail-container").each(function() {
+		var thumbnail_container = $(this);
+		var thumbnail_divs = $(this).find(".thumbnail-div");
 
-		element_target = elem;
+		// Set up thumbnail on click
+		$(this).find("a").on("click", function(e) {
+			e.preventDefault();
 
-		$(".max-view").hide();
-		$(".min-view").show();
-		$("#"+id+" .min-view").hide();
-		$("#"+id+" .max-view").show();
+			var this_thumbnail_div = $(this).closest(".thumbnail-div");
 
-		masonry_obj.layout();
-	});
-
-	$(elem).find(".minimize-view").on("click", function() {
-		$(elem).removeClass(maximized_class_list).addClass(minimized_class_list);
-
-		element_target = undefined;
-
-		$(".max-view").hide();
-		$("#"+id+" .min-view").show();
-
-		masonry_obj.layout();
-	})
-
-	// Update collapse references
-	$(elem).find(".btn[data-toggle='collapse']").on("click", function() {
-		//var target = "#"+id+" "+$(this).attr("data-target");
-		//$(this).attr("data-target", target);
-
-		var target = $(elem).find($(this).attr("data-target"));
-		target.collapse("toggle");
-		target.on("hidden.bs.collapse", function() {
-			masonry_obj.layout();
+			// TODO: This could possibly be optimized to minimize state changes within elements
+			if (this_thumbnail_div.hasClass("col-xs-12")) {
+				// Minimize and show all
+				thumbnail_divs.show();
+				thumbnail_divs.removeClass(maximize_class_list);
+				thumbnail_divs.addClass(minimize_class_list);
+			}
+			else {
+				// Hide all and Maximize + show this
+				thumbnail_divs.hide();
+				this_thumbnail_div.removeClass(minimize_class_list);
+				this_thumbnail_div.addClass(maximize_class_list);
+				this_thumbnail_div.show();
+			}
 		});
-
-		target.on("shown.bs.collapse", function() {
-			masonry_obj.layout();
-		});
-
-		//console.log(target);
 	});
 
 	$(elem).show();
 
 	return elem;
+}
+
+function getVisibleElementTagsMinusActiveTags() {
+	var element_tags = getVisibleElementTags();
+	var active_tags = getActiveTags();
+
+	element_tags = element_tags.filter(function(elem) {
+		for (var i=0; i < active_tags.length; i++) {
+			if (elem == active_tags[i])
+				return false;
+		}
+		return true;
+	});
+
+	return element_tags;
+}
+
+function getVisibleElementTags() {
+	return extractTagsAsStrings($("#element-container").find(".element:visible").find("#element-tag-container"));
+}
+
+function getActiveTags() {
+	return extractTagsAsStrings($("#active-tag-container"));
 }
 
 function extractTagsAsStrings(q_obj) {
@@ -460,11 +496,14 @@ function customFilterElements() {
 	$(".element").hide();
 
 	$(".element").filter(function() {
+		// Get tags for this element
 		var element_tag_array = extractTagsAsStrings($(this).find("#element-tag-container"));
 		var q1 = $(this).find("#path:contains('"+path+"')").length > 0;
 		var q2 = filterTags(element_tag_array, filter_tag_array);
 		return q1 && q2;
 	}).show();
+
+	updateTagList();
 }
 
 // Use hashtag to filter data based on path
@@ -489,6 +528,5 @@ $(window).on('hashchange', function() {
 	}
 
 	customFilterElements();
-
 	masonry_obj.layout();
 });
