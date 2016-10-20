@@ -71,7 +71,7 @@ function onTagClick(event) {
 	if ($all_selected_matching_tags.length > 0) return;
 
 	var new_elem = $(this).clone();
-	$(new_elem).html("<span class='glyphicon glyphicon-remove'></span>" + tag);
+	$(new_elem).html("<span class='glyphicon glyphicon-remove'></span> " + tag);
 
 	$(new_elem).off('click');
 	$(new_elem).on('click', function(event) {
@@ -144,7 +144,9 @@ function updateTagList() {
 	for(var tag in tagcount) {
 	    sortedtags[sortedtags.length] = tag;
 	}
-	sortedtags.sort();
+	sortedtags.sort(function (a, b) {
+    	return a.toLowerCase().localeCompare(b.toLowerCase());
+	});
 
 	var taglist_cont = $("#taglists-taglistlist-container");
 	$(taglist_cont).empty();

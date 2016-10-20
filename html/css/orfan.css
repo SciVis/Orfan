@@ -12,6 +12,11 @@
 	font-size: 16px;
 }
 
+div.taglist-container {
+    line-height: 200%;
+    text-align: center;
+}
+
 /*
 .element-thumb-img {
 	max-width: 200px;
@@ -138,14 +143,6 @@ td.crop {
   white-space:nowrap;
   text-overflow:ellipsis;
 }​
-
-#active-tag-container button {
-	margin: 2px;
-}
-
-#taglists-taglistlist-container {
-    line-height: 200%;
-}
 
 /*body { padding-top: 70px; } */
 
