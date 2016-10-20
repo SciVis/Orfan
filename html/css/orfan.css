@@ -18,27 +18,6 @@ div.taglist-container {
     text-align: center;
 }
 
-/*
-.element-thumb-img {
-	max-width: 200px;
-	max-height: 180px;
-}
-*/
-
-/*
-.element-minimized {
-	width: 250px;
-}
-
-.element-maximized {
-	width: 100%;
-}
-
-.min-view {
-	height: 350px;
-}
-*/
-
 .navbar-margin {
     margin-top: 70px;
 }
@@ -117,8 +96,11 @@ div.taglist-container {
 	width: 15%;
 }
 
-.file-element-filelist-size-target{
-	padding-left: 20px;
+.file-element-filelist-size-target {
+	margin-left: 20px;
+}
+.file-element-filelist-copy-target {
+	margin-left: 20px;
 }
 
 .thumbnail {
@@ -140,7 +122,7 @@ td.crop {
 }
 
 .crop { 
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
 }​

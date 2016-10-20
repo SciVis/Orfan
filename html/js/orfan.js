@@ -59,6 +59,23 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    $(this).ekkoLightbox();
 	});
+
+	// Aktivate clipboard buttons
+	var clipboard = new Clipboard('.copylinkbtn');
+
+	/* debug
+	clipboard.on('success', function(e) {
+	    console.info('Action:', e.action);
+	    console.info('Text:', e.text);
+	    console.info('Trigger:', e.trigger);
+	
+	    e.clearSelection();
+	});
+	
+	clipboard.on('error', function(e) {
+	    console.error('Action:', e.action);
+	    console.error('Trigger:', e.trigger);
+	});*/
 });
 
 function onTagClick(event) {
@@ -359,15 +376,14 @@ function createElement(key, meta_data) {
 						var fli = meta_data["files"][i]["filelist"][u];
 
 						// Provide meaningful default values
-						if (fli["name"] == undefined)
-							fli["name"] = "";
-						if (fli["size"] == undefined)
-							fli["size"] = 0;
+						if (fli["name"] == undefined) fli["name"] = "";
+						if (fli["size"] == undefined) fli["size"] = 0;
 
 						totalFileSize += fli["size"];
 
 						$(fle).find(".file-element-filelist-name-target").html(fli["name"]);
 						$(fle).find(".file-element-filelist-size-target").html(humanFileSize(fli["size"]));
+						$(fle).find(".file-element-filelist-copy-target").attr("data-clipboard-text", key + "/" + fli["name"]);
 						$(this).append(fle);
 					}
 				});
