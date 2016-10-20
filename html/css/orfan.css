@@ -1,6 +1,7 @@
 .nav .breadcrumb {
     margin: 0 7px;
 }
+
 @media (min-width: 768px) {
     .nav .breadcrumb {
         float: left;
@@ -116,7 +117,7 @@ div.taglist-container {
 	width: 15%;
 }
 
-.files-filelist-size-target {
+.file-element-filelist-size-target{
 	padding-left: 20px;
 }
 
@@ -143,29 +144,3 @@ td.crop {
   white-space:nowrap;
   text-overflow:ellipsis;
 }​
-
-/*body { padding-top: 70px; } */
-
-/*
-*, *:before, *:after {box-sizing:  border-box !important;}
-
-
-.row {
- -moz-column-width: 18em;
- -webkit-column-width: 18em;
- -moz-column-gap: 1em;
- -webkit-column-gap:1em; 
-  
-}
-
-.item {
- display: inline-block;
- padding:  .25rem;
- width:  200px;
-}
-
-.well {
- position:relative;
- display: block;
-}
-*/
