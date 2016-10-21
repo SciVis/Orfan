@@ -13,7 +13,7 @@ $(document).ready(function() {
 	element_base = $("#element-base").clone();
 	$("#element-base").remove();
 
-	modal_base = $("#modal_base").clone();
+	modal_base = $("#modal-base").clone();
 	$("#modal-base").remove();
 
 	tag_base = $("#tag-base").clone();
@@ -36,7 +36,7 @@ $(document).ready(function() {
 	masonry_obj = new Masonry('.grid', {
 	  // options
 	  itemSelector: '.item',
-	  columnWidth: '.element-minimized:not([style*="display: none"])' // Use first visible minimized-element as columnWidth reference
+	  columnWidth: '.element:not([style*="display: none"])' // Use first visible minimized-element as columnWidth reference
 	});
 
 	// layout Masonry after images are loaded
@@ -116,18 +116,53 @@ function loadAndPopulateData() {
 		return;
 	}
 
-	// Hide the template element and apply default values that will be copied into the clones
-	//$("#element-base").hide();
-	//$("#element-base .max-view").hide();
-	//$("#element-base").find('[data-toggle="lightbox"]').attr("data-footer", "");
+	// Target containers
+	var element_container = $("#element-container");
+	var modal_container = $("#modal-container");
 
-	var container = $("#element-container");
 	for (var key in metas) {
-		container.append(createElement(key, metas[key]));
-	}
+		var meta_data = metas[key];
 
-	// Remove example element
-	//$("#element-base").remove();
+		// Defaults
+		if (meta_data["name"] == undefined)
+			meta_data["name"] = "Undefined";
+
+		if (meta_data["tags"] == undefined)
+			meta_data["tags"] = [];
+
+		if (meta_data["thumbnails"] == undefined)
+			meta_data["thumbnails"] = [];
+
+		if (meta_data["description"] == undefined)
+			meta_data["description"] = "";
+
+		if (meta_data["origin"] == undefined)
+			meta_data["origin"] = "";
+
+		if (meta_data["contact"] == undefined)
+			meta_data["contact"] = "";
+
+		if (meta_data["license"] == undefined)
+			meta_data["license"] = "";
+
+		if (meta_data["notes"] == undefined)
+			meta_data["notes"] = "";
+
+		if (meta_data["acknowledgements"] == undefined)
+			meta_data["acknowledgements"] = "";
+
+		if (meta_data["citations"] == undefined)
+			meta_data["citations"] = [];
+		
+		if (meta_data["link"] == undefined)
+			meta_data["link"] = "";
+
+		if (meta_data["files"] == undefined)
+			meta_data["files"] = [];
+
+		element_container.append(createElement(key, meta_data));
+		modal_container.append(createModal(key, meta_data));
+	}
 
 	// Add error list
 	var errors = data["errors"];
@@ -205,61 +240,16 @@ function getfilepath(filepath, filename) {
 	return host + "/" + filepath + "/" + filename;
 }
 
-function createElement(key, meta_data) {
-	var elem = $(element_base).clone(true);
+function generateId(key) {
+	return key.replace(/\//g, "-");
+}
 
-	var id = key.replace(/\//g, "-");
-	id = id.replace(/\\/g, "-");
-
-	// Update id
-	elem.id = id;
-
-	// Create default values if none exists
-	if (meta_data["name"] == undefined)
-		meta_data["name"] = "Undefined";
-
-	if (meta_data["tags"] == undefined)
-		meta_data["tags"] = [];
-
-	if (meta_data["thumbnails"] == undefined)
-		meta_data["thumbnails"] = [];
-
-	if (meta_data["description"] == undefined)
-		meta_data["description"] = "";
-
-	if (meta_data["origin"] == undefined)
-		meta_data["origin"] = "";
-
-	if (meta_data["contact"] == undefined)
-		meta_data["contact"] = "";
-
-	if (meta_data["license"] == undefined)
-		meta_data["license"] = "";
-
-	if (meta_data["notes"] == undefined)
-		meta_data["notes"] = "";
-
-	if (meta_data["acknowledgements"] == undefined)
-		meta_data["acknowledgements"] = "";
-
-	if (meta_data["citations"] == undefined)
-		meta_data["citations"] = [];
-	
-	if (meta_data["link"] == undefined)
-		meta_data["link"] = "";
-
-	if (meta_data["files"] == undefined)
-		meta_data["files"] = [];
-
-	// Update header/title
-	$(elem).find(".title").html(meta_data["name"]);
-
-	// Update path
-	$(elem).find("#path").html(key);
+function setupPath(elem, path) {
+	$(elem).find("#path").html(path);
 	$(elem).find(".path-container").html(function() {
 		var path_elem = $(this).find(":first").clone();
 		$(this).empty();
-		var path_chunks = key.split("/");
+		var path_chunks = path.split("/");
 		for (var i=0; i < path_chunks.length ; i++) {
 			var e = path_elem.clone();
 			var p = path_chunks[0];
@@ -274,67 +264,73 @@ function createElement(key, meta_data) {
 			$(this).append(e);
 		}
 	});
+}
 
-	// Update tags
+function setupTags(elem, tags) {
 	$(elem).find(".tag-container").html(function() {
 		var tag_elem = $(this).find(":first").clone();
 		$(this).empty();
-		for (var i=0; i < meta_data["tags"].length; i++) {
+		for (var i=0; i < tags.length; i++) {
 			var e = tag_elem.clone();
-			$(e).html(meta_data["tags"][i]);
-			$(e).attr("tag", meta_data["tags"][i]);
+			$(e).html(tags[i]);
+			$(e).attr("tag", tags[i]);
 			$(this).append(e);
 			$(this).append(" ");
 
 			$(e).on('click', onTagClick);
 		}
 	});
+}
+
+function createModal(key, meta_data) {
+	var modal = $(modal_base).clone(true);
+	var id = generateId(key);
+
+	// Update id
+	$(modal).attr("id", "modal-"+id);
+
+	// Update header/title
+	$(modal).find(".title").html(meta_data["name"]);
+
+	// Update path
+	setupPath(modal, key);
+
+	// Update tags
+	setupTags(modal, meta_data["tags"]);
 
 	// Update thumbnails (Both views)
 	var thumb_src_base = "thumbnails" + "/" + key + "/";
 
 	if (meta_data["thumbnails"] !== undefined && meta_data["thumbnails"].length > 0) {
-		if (meta_data["thumbnails"].length > 0) {
-			// Minimized view
-			{
-				var src = thumb_src_base + meta_data["thumbnails"][0]["name"];
-				var cap = meta_data["thumbnails"][0]["caption"];
+		$(modal).find(".thumbnail-container").html(function() {
+			var thumb_elem = $(this).find(":first").clone();
+			$(this).empty();
+			for (var i=0; i < meta_data["thumbnails"].length; i++) {
+				var e = thumb_elem.clone();
+				var src = thumb_src_base + meta_data["thumbnails"][i]["name"];
+				var cap = meta_data["thumbnails"][i]["caption"];
 
-				$(elem).find(".thumbnail-preview a").attr("data-footer", cap);
-				$(elem).find(".thumbnail-preview img").attr("src", src);
+				$(e).find("a").attr("href", src).attr("data-footer", cap).attr("data-gallery", id);
+				$(e).find("img").attr("src", src);
+				$(e).find(".caption-target").html(cap);
+				$(this).append(e);
 			}
-
-			// Maximized view
-			$(elem).find(".thumbnail-container").html(function() {
-				var thumb_elem = $(this).find(":first").clone();
-				$(this).empty();
-				for (var i=0; i < meta_data["thumbnails"].length; i++) {
-					var e = thumb_elem.clone();
-					var src = thumb_src_base + meta_data["thumbnails"][i]["name"];
-					var cap = meta_data["thumbnails"][i]["caption"];
-
-					$(e).find("a").attr("href", src).attr("data-footer", cap).attr("data-gallery", id);
-					$(e).find("img").attr("src", src);
-					$(e).find(".caption-target").html(cap);
-					$(this).append(e);
-				}
-			});
-		}
+		});
 	}
 
 	// Update various information
-	$(elem).find(".description-target").html(meta_data["description"]);
-	$(elem).find(".origin-target").html(meta_data["origin"]);
-	$(elem).find(".contact-target").html(meta_data["contact"]);
-	$(elem).find(".license-target").html(meta_data["license"]);
-	$(elem).find(".notes-target").html(meta_data["notes"]);
-	$(elem).find(".acknowledgements-target").html(meta_data["acknowledgements"]);
-	$(elem).find(".link-target").html(meta_data["link"]);
-	$(elem).find(".link-target").attr("href", meta_data["link"]);
+	$(modal).find(".description-target").html(meta_data["description"]);
+	$(modal).find(".origin-target").html(meta_data["origin"]);
+	$(modal).find(".contact-target").html(meta_data["contact"]);
+	$(modal).find(".license-target").html(meta_data["license"]);
+	$(modal).find(".notes-target").html(meta_data["notes"]);
+	$(modal).find(".acknowledgements-target").html(meta_data["acknowledgements"]);
+	$(modal).find(".link-target").html(meta_data["link"]);
+	$(modal).find(".link-target").attr("href", meta_data["link"]);
 
 	// Update Citations
 	if (meta_data["citations"].length > 0) {
-		$(elem).find(".citations-container").html(function() {
+		$(modal).find(".citations-container").html(function() {
 			var cit_elem = $(this).find(":first").clone();
 			$(this).empty();
 			for (var i=0; i < meta_data["citations"].length; i++) {
@@ -346,20 +342,20 @@ function createElement(key, meta_data) {
 		});
 
 		// Set unique ID for collapse target
-		var collapse_button = $(elem).find(".btn[data-target='#citations-container-div']");
-		var collapse_target = $(elem).find("#citations-container-div");
+		var collapse_button = $(modal).find(".btn[data-target='#citations-container-div']");
+		var collapse_target = $(modal).find("#citations-container-div");
 		var new_id = id + "-citations-container";
 
 		collapse_button.attr("data-target", "#" + new_id);
 		collapse_target.attr("id", new_id)
 	}
 	else {
-		$(elem).find("#citations-panel").remove();
+		$(modal).find("#citations-panel").remove();
 	}
 
 	// Update Files
 	if (meta_data["files"].length > 0) {
-		var fc = $(elem).find("#file-element-container").html(function() {
+		var fc = $(modal).find("#file-element-container").html(function() {
 			var file_elem = $(this).find(":first").clone(true);
 			$(this).empty();
 			for (var i=0; i < meta_data["files"].length; i++) {
@@ -449,20 +445,37 @@ function createElement(key, meta_data) {
 		});
 	}
 	else {
-		$(elem).find("#files-panel").remove();
+		$(modal).find("#files-panel").remove();
 	}
 
 	// --- FUNCTIONALITY ---
 
+	// --- MODALS ---
 	// Update modal targets
-	const modal_id = id + "-modal";
-	$(elem).find(".modal").attr("id", modal_id);
-	$(elem).find("[data-toggle='modal']").attr("data-target", "#"+modal_id);
+	const modal_id = "modal-" + id;
+	$(modal).find(".modal").attr("id", modal_id);
+	//$(elem).find("[data-toggle='modal']").attr("data-target", "#"+modal_id);
+
+	const element_id = "element-" + id;
+	// Setup prev and next modal functionality
+	$(modal).find("[data-action='next-modal']").on("click", function() {
+		$(".modal").modal("hide");
+		// TODO: Simplify this query?
+		var next_modal_id = $("#"+element_id).nextAll(":visible").first().find("[data-toggle='modal']").attr("data-target");
+		$(next_modal_id).modal("show");
+	});
+
+	$(modal).find("[data-action='prev-modal']").on("click", function() {
+		$(".modal").modal("hide");
+		// TODO: Simplify this query?
+		var prev_modal_id = $("#"+element_id).prevAll(":visible").first().find("[data-toggle='modal']").attr("data-target");
+		$(prev_modal_id).modal("show");
+	});
 
 	const minimize_class_list = "col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
 	const maximize_class_list = "col-xs-12";
 	// Setup functionality of thumbnails
-	$(elem).find(".thumbnail-container").each(function() {
+	$(modal).find(".thumbnail-container").each(function() {
 		var thumbnail_container = $(this);
 		var thumbnail_divs = $(this).find(".thumbnail-div");
 
@@ -488,6 +501,48 @@ function createElement(key, meta_data) {
 			}
 		});
 	});
+
+	return modal;
+}
+
+function createElement(key, meta_data) {
+	var elem = $(element_base).clone(true);
+	var id = generateId(key);
+
+	// Update id
+	$(elem).attr("id", "element-"+id);
+
+	// Update header/title
+	$(elem).find(".title").html(meta_data["name"]);
+
+	// Update path
+	setupPath(elem, key);
+
+	// Update tags
+	setupTags(elem, meta_data["tags"]);
+
+	// Update thumbnails (Both views)
+	var thumb_src_base = "thumbnails" + "/" + key + "/";
+
+	if (meta_data["thumbnails"] !== undefined && meta_data["thumbnails"].length > 0) {
+		if (meta_data["thumbnails"].length > 0) {
+			var src = thumb_src_base + meta_data["thumbnails"][0]["name"];
+			var cap = meta_data["thumbnails"][0]["caption"];
+
+			$(elem).find(".thumbnail-preview a").attr("data-footer", cap);
+			$(elem).find(".thumbnail-preview img").attr("src", src);
+		}
+	}
+
+	// Update various information
+	$(elem).find(".description-target").html(meta_data["description"]);
+
+	// --- FUNCTIONALITY ---
+
+	// --- MODALS ---
+	// Update modal targets
+	const modal_id = "modal-" + id; 
+	$(elem).find("[data-toggle='modal']").attr("data-target", "#"+modal_id);
 
 	$(elem).show();
 	return elem;
