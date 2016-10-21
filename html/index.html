@@ -62,11 +62,19 @@
       <div class="row content">
         <div class="col-sm-2 sidenav navbar-margin">
           <div class="taglist-container" id="active-tag-container">
-            <button type="button" id="active-tag-base" class="tag btn btn-info btn-xs" tag='Tag1'><span class='glyphicon glyphicon-remove'></span><span id="tag-caption-target">Tag1</span></button>
+            <button type="button" id="active-tag-base" 
+                    class="tag btn btn-info btn-xs" tag='Tag1'>
+                    <span class='glyphicon glyphicon-remove'></span>
+                    <span id="tag-caption-target">Tag1</span>
+            </button>
           </div>
           <br>
           <div class="taglist-container" id="taglists-taglistlist-container">
-            <button type="button" id="counted-tag-base" class="tag btn btn-info btn-xs" tag='Tag1'><span class='badge' id="count-target">1</span> <span id="caption-target">Tag1</span></button>
+            <button type="button" id="counted-tag-base" 
+                    class="tag btn btn-info btn-xs" tag='Tag1'>
+              <span class='badge' id="count-target">1</span> 
+              <span id="caption-target">Tag1</span>
+            </button>
           </div>
         </div>
 
@@ -230,9 +238,14 @@
     	                                      <span class="file-element-filelist-size-target">120 B</span>
     	                                    </td>
                                           <td>
-                                            <button class="file-element-filelist-copy-target btn btn-default btn-xs copylinkbtn" data-clipboard-text="somepath">
+                                            <button class="file-element-filelist-copy-target btn btn-default btn-xs copylinkbtn" 
+                                                    data-clipboard-text="somepath">
                                               <span class="glyphicon glyphicon-copy"></span>
                                             </button>
+                                            <a class="file-element-filelist-open-target btn btn-default btn-xs" 
+                                               target="_blank" href="somepath">
+                                              <span class="glyphicon glyphicon-open-file"></span>
+                                            </a>
                                           </td>
                                           </tr>
                                         </table>

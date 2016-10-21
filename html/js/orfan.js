@@ -187,6 +187,24 @@ function humanFileSize(size) {
 	return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
 };
 
+function normalizePath(path){
+    path = Array.prototype.join.apply(arguments,['/'])
+    var sPath;
+    while (sPath!==path) {
+        sPath = n(path);
+        path = n(sPath);
+    }
+    function n(s){return s.replace(/\/+/g,'/').replace(/\w+\/+\.\./g,'')}
+    return path.replace(/^\//,'').replace(/\/$/,'');
+}
+function getfilepath(filepath, filename) {
+	var path = window.location.pathname;
+	path = path.substring(0,path.lastIndexOf("/")); // remove index.html
+	var host = window.location.protocol +"//"+ window.location.host + "/"
+			 + normalizePath(path + "/" + data["datapath"]);
+	return host + "/" + filepath + "/" + filename;
+}
+
 function createElement(key, meta_data) {
 	var elem = $(element_base).clone(true);
 
@@ -383,7 +401,9 @@ function createElement(key, meta_data) {
 
 						$(fle).find(".file-element-filelist-name-target").html(fli["name"]);
 						$(fle).find(".file-element-filelist-size-target").html(humanFileSize(fli["size"]));
-						$(fle).find(".file-element-filelist-copy-target").attr("data-clipboard-text", key + "/" + fli["name"]);
+						var filepath = getfilepath(key, fli["name"]);
+						$(fle).find(".file-element-filelist-copy-target").attr("data-clipboard-text", filepath);
+						$(fle).find(".file-element-filelist-open-target").attr("href", filepath);
 						$(this).append(fle);
 					}
 				});
@@ -470,7 +490,6 @@ function createElement(key, meta_data) {
 	});
 
 	$(elem).show();
-
 	return elem;
 }
 

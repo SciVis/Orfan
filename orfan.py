@@ -45,7 +45,12 @@ if __name__ == '__main__':
 
     with open(os.path.join(outputDir, "data.js"), 'w') as f:
         f.write("var data = ")
-        f.write(json.dumps({"datasets" : meta, "software" : software, "errors" : errors}, indent=4))
+        f.write(json.dumps({
+            "datasets" : meta, 
+            "software" : software, 
+            "errors" : errors,
+            "datapath" : os.path.relpath(args.path, outputDir).replace(os.path.sep, "/")
+        }, indent=4))
 
     for thumbnail in thumbnails:
         os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),  exist_ok=True)
