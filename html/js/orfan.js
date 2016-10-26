@@ -1,5 +1,4 @@
 // GLOBAL OBJECTS
-var masonry_obj;
 
 // TEMPLATE BASE OBJECTS
 var element_base;
@@ -31,36 +30,12 @@ $(document).ready(function() {
 	// --- UPDATE TAGS ---
 	updateTagList();
 
-	// --- INIT EXTERNAL OBJECTS ---
-	// Masonry
-	masonry_obj = new Masonry('.grid', {
-	  // options
-	  itemSelector: '.item',
-	  columnWidth: '.element:not([style*="display: none"])' // Use first visible minimized-element as columnWidth reference
-	});
-
-	// layout Masonry after images are loaded
-	$("#element-container").imagesLoaded()
-		.done(function() {
-			masonry_obj.layout();
-		});
-
 	// List
 	var listObj = new List('body', {
 		valueNames: ['title', 'path', 'tag']
 	});
 
-	listObj.on("searchComplete", function() {
-		masonry_obj.layout();
-	})
-
-	// Lightbox
-	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
-	    event.preventDefault();
-	    $(this).ekkoLightbox();
-	});
-
-	// Aktivate clipboard buttons
+	// Activate clipboard buttons
 	var clipboard = new Clipboard('.copylinkbtn');
 
 	/* debug
@@ -95,14 +70,12 @@ function onTagClick(event) {
 		event.preventDefault();
 		$(this).remove();
 		customFilterElements();
-		masonry_obj.layout();
 	});
 
 	// Append element
 	$("#active-tag-container").append(new_elem).append(" ");
 
 	customFilterElements();
-	masonry_obj.layout();
 }
 
 // Loads metalist containing references to all meta data
@@ -474,8 +447,9 @@ function createModal(key, meta_data) {
 
 	const minimize_class_list = "col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
 	const maximize_class_list = "col-xs-12";
+
 	// Setup functionality of thumbnails
-	$(modal).find(".thumbnail-container").each(function() {
+	$(modal).find("#thumbnail-container").each(function() {
 		var thumbnail_container = $(this);
 		var thumbnail_divs = $(this).find(".thumbnail-div");
 
@@ -500,6 +474,14 @@ function createModal(key, meta_data) {
 				this_thumbnail_div.show();
 			}
 		});
+	});
+
+	// Minimize thumbnails when modal closes
+	$(modal).on('hidden.bs.modal', function () {
+		var thumbnail_divs = $(this).find("#thumbnail-container").find(".thumbnail-div");
+	    thumbnail_divs.show();
+		thumbnail_divs.removeClass(maximize_class_list);
+		thumbnail_divs.addClass(minimize_class_list);
 	});
 
 	return modal;
@@ -638,5 +620,4 @@ $(window).on('hashchange', function() {
 	}
 
 	customFilterElements();
-	masonry_obj.layout();
 });
