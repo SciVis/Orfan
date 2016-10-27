@@ -38,6 +38,18 @@ $(document).ready(function() {
 	// Activate clipboard buttons
 	var clipboard = new Clipboard('.copylinkbtn');
 
+	// Setup modal functionality
+	$('#modal').on('show.bs.modal', function(event) {
+    	var modal_target = $(event.relatedTarget).attr("data-modal-target");
+    	showModalTarget(modal_target)
+	});
+
+	// Minimize thumbnails when modal closes
+	$('#modal').on('hide.bs.modal', function () {
+		var thumbnail_divs = $(this).find(".modal-content:visible").find("#thumbnail-container").find(".thumbnail-div");
+	    minimizeThumbnails(thumbnail_divs);
+	});
+
 	/* debug
 	clipboard.on('success', function(e) {
 	    console.info('Action:', e.action);
@@ -52,6 +64,33 @@ $(document).ready(function() {
 	    console.error('Trigger:', e.trigger);
 	});*/
 });
+
+const minimize_class_list = "col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
+const maximize_class_list = "col-xs-12";
+
+function minimizeThumbnails(jquery_obj) {
+	console.log(jquery_obj);
+	jquery_obj.show();
+	jquery_obj.removeClass(maximize_class_list);
+	jquery_obj.addClass(minimize_class_list);
+}
+
+function maximizeThumbnail(jquery_obj) {
+	jquery_obj.siblings().hide();
+	jquery_obj.removeClass(minimize_class_list);
+	jquery_obj.addClass(maximize_class_list);
+	jquery_obj.show();
+}
+
+function showModalTarget(target) {
+	$("#modal").find(".modal-content").hide();
+
+	var q = $("#modal").find(target);
+	if (q.length > 0)
+		q.show();
+	else
+		$("#modal").modal('hide');
+}
 
 function onTagClick(event) {
 	event.preventDefault();
@@ -427,26 +466,28 @@ function createModal(key, meta_data) {
 	// Update modal targets
 	const modal_id = "modal-" + id;
 	$(modal).find(".modal").attr("id", modal_id);
-	//$(elem).find("[data-toggle='modal']").attr("data-target", "#"+modal_id);
 
 	const element_id = "element-" + id;
 	// Setup prev and next modal functionality
 	$(modal).find("[data-action='next-modal']").on("click", function() {
-		$(".modal").modal("hide");
+		//$(".modal").modal("hide");
 		// TODO: Simplify this query?
-		var next_modal_id = $("#"+element_id).nextAll(":visible").first().find("[data-toggle='modal']").attr("data-target");
-		$(next_modal_id).modal("show");
+		var next_modal_id = $("#"+element_id).nextAll(":visible").first().find("[data-toggle='modal']").attr("data-modal-target");
+		var thumbnail_divs = $(modal).find("#thumbnail-container").find(".thumbnail-div");
+		minimizeThumbnails(thumbnail_divs);
+		showModalTarget(next_modal_id);
+		//$(next_modal_id).modal("show");
 	});
 
 	$(modal).find("[data-action='prev-modal']").on("click", function() {
-		$(".modal").modal("hide");
+		//$(".modal").modal("hide");
 		// TODO: Simplify this query?
-		var prev_modal_id = $("#"+element_id).prevAll(":visible").first().find("[data-toggle='modal']").attr("data-target");
-		$(prev_modal_id).modal("show");
+		var prev_modal_id = $("#"+element_id).prevAll(":visible").first().find("[data-toggle='modal']").attr("data-modal-target");
+		var thumbnail_divs = $(modal).find("#thumbnail-container").find(".thumbnail-div");
+		minimizeThumbnails(thumbnail_divs);
+		showModalTarget(prev_modal_id);
+		//(prev_modal_id).modal("show");
 	});
-
-	const minimize_class_list = "col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
-	const maximize_class_list = "col-xs-12";
 
 	// Setup functionality of thumbnails
 	$(modal).find("#thumbnail-container").each(function() {
@@ -456,15 +497,11 @@ function createModal(key, meta_data) {
 		// Set up thumbnail on click
 		$(this).find("a").on("click", function(e) {
 			e.preventDefault();
-
 			var this_thumbnail_div = $(this).closest(".thumbnail-div");
 
 			// TODO: This could possibly be optimized to minimize state changes within elements
 			if (this_thumbnail_div.hasClass("col-xs-12")) {
-				// Minimize and show all
-				thumbnail_divs.show();
-				thumbnail_divs.removeClass(maximize_class_list);
-				thumbnail_divs.addClass(minimize_class_list);
+				minimizeThumbnails(thumbnail_divs);
 			}
 			else {
 				// Hide all and Maximize + show this
@@ -474,14 +511,6 @@ function createModal(key, meta_data) {
 				this_thumbnail_div.show();
 			}
 		});
-	});
-
-	// Minimize thumbnails when modal closes
-	$(modal).on('hidden.bs.modal', function () {
-		var thumbnail_divs = $(this).find("#thumbnail-container").find(".thumbnail-div");
-	    thumbnail_divs.show();
-		thumbnail_divs.removeClass(maximize_class_list);
-		thumbnail_divs.addClass(minimize_class_list);
 	});
 
 	return modal;
@@ -524,7 +553,7 @@ function createElement(key, meta_data) {
 	// --- MODALS ---
 	// Update modal targets
 	const modal_id = "modal-" + id; 
-	$(elem).find("[data-toggle='modal']").attr("data-target", "#"+modal_id);
+	$(elem).find("[data-toggle='modal']").attr("data-modal-target", "#"+modal_id);
 
 	$(elem).show();
 	return elem;

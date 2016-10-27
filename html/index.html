@@ -75,10 +75,10 @@
           </div>
         </div>
         <div class="col-sm-10 text-left">
-          <div class="" id="modal-container">
-            <div class="modal fade" id="modal-base" role="dialog"> <!-- Modal -->
-              <div class="modal-dialog">
-                <div class="modal-content">
+          <!--<div class="" id="modal-container">-->
+            <div class="modal fade" role="dialog" id="modal"> <!-- Modal -->
+              <div class="modal-dialog" id="modal-container">
+                <div class="modal-content" id="modal-base">
                   <div class="modal-header">
                     <div class="modal-control-panel">
                       <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
@@ -224,13 +224,13 @@
                 </div>
               </div>
             </div>
-          </div>
+          <!--</div>-->
           <div class="list grid navbar-margin row" id="element-container">
             <div class="element item col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2" id='element-base'>
               <div class="path" id='path' hidden>Base/Subfolder/subsubfolder/</div>
               <div class='panel panel-default'>
                 <div class='panel-heading'>
-                  <button class='btn btn-default header-btn' data-toggle="modal" data-target="modal-base">
+                  <button class='btn btn-default header-btn' data-toggle="modal" data-target="#modal" data-modal-target="modal-base">
                     <h4 class="title crop">This is the element view</h4>
                   </button>
                   <div class='path-container crop'>
@@ -246,7 +246,7 @@
                 </div>
                 <div class="thumbnail-preview panel-body" >
                   <div class="thumbnail">
-                    <a href="#" data-toggle="modal" data-target="modal-base">
+                    <a href="#" data-toggle="modal" data-target="#modal" data-modal-target="modal-base">
                     <img class="img-fluid" src="img/no_img.png" alt="">
                     </a>
                   </div>
