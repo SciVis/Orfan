@@ -110,89 +110,84 @@
                         </div>
                       </div>
                     </div>
-                    <div class="panel-body sub-panel collapse in" id="info-container">
-                      <ul class="list-group">
-                        <li class="row info-row">
+                    <div class="panel-body sub-panel">
+                      <ul class="list-group" id="info-container">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">Description</div>
                           <div class="col-sm-9 description-target">this is a description</div>
                         </li> 
-                        <li class="row info-row">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">Origin</div>
                           <div class="col-sm-9 origin-target">from mister X</div>
                         </li> 
-                        <li class="row info-row">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">Contact</div>
                           <div class="col-sm-9 contact-target">niklas@liu.se</div>
                         </li> 
-                        <li class="row info-row">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">License</div>
                           <div class="col-sm-9 license-target">Free</div>
                         </li> 
-                        <li class="row info-row">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">Notes</div>
                           <div class="col-sm-9 notes-target">this is a note</div>
                         </li> 
-                        <li class="row info-row">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">Acknowledgements</div>
                           <div class="col-sm-9 acknowledgements-target">thank you mister x</div>
                         </li> 
-                        <li class="row info-row">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">Link</div>
                           <div class="col-sm-9 crop">
                             <a class='link-target' href='' target='_blank'>this is a link</a>
                           </div>
                         </li>
-                        <li class="row info-row">
+                        <li class="list-group-item row info-row">
                           <div class="col-sm-3">Software</div>
                           <div class="col-sm-9 software-target">Inviwo</div>
                         </li>
-                      </ul>
-                    </div>
-                    <div class='panel panel-default citations-panel' id='citations-panel'>
-                      <div class="panel-heading">
-                        <button class="btn btn-xs pull-right" aria-hidden="true" role="button" 
-                          data-toggle="collapse" data-target="#citations-container-div" 
-                          aria-expanded="false" aria-controls="citations-container-div">
-                        <span class="glyphicon glyphicon-option-horizontal"></span>
-                        </button>
-                        <span>Citations</span>
-                      </div>
-                      <div class="panel-body sub-panel collapse" id="citations-container-div">
-                        <table class="table table-striped citations-container-table">
-                          <tbody class="citations-container">
-                            <tr>
-                              <td class="payload-target">@article{big,\nauthor = {Jass, Hugh},\ntitle = {A big paper},\njournal = {The journal of big papers},\nyear = 7991,\nvolume = {MCMXCVII}}</td>
-                              <td class="type-target">BibTex</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class='' id='file-element-container'>
-                      <div class="panel panel-default" id='file-element'>
-                        <div class="panel-heading">
-                          <span>
-                            <h4 class="file-element-description-target">Some description</h4>
+                        <!--- Citation Panel -->
+                        <li class='list-group-item row info-row citations-panel' id='citations-panel'>
+                          <div class="col-sm-12">Citations
+                            <button class="btn btn-xs pull-right" aria-hidden="true" role="button" 
+                                    data-toggle="collapse" data-target="#citations-container-div" 
+                                    aria-expanded="false" aria-controls="citations-container-div">
+                              <span class="glyphicon glyphicon-option-horizontal"></span>
+                            </button>
+                          </div>
+                          <div class="col-sm-12 collapse" id="citations-container-div">
+                            <ul class="citations-container-table">
+                              <li>
+                                <span class="payload-target">@10.1109/TVCG.2006.146</span>
+                                <span class="pull-right badge type-target">DOI</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                        <!--- File Panel -->
+                        <li class='list-group-item row info-row citations-panel' id='file-element'>
+                          <div class="col-sm-12">
+                            <span class="file-element-description-target">Some description</span>
+                            <button class="btn btn-xs pull-right" aria-hidden="true" role="button" 
+                                    data-toggle="collapse" data-target="#file-element-body" 
+                                    aria-expanded="false" aria-controls="file-element-body">
+                              <span class="glyphicon glyphicon-option-horizontal"></span>
+                            </button>
+                          </div>
+                          <div class="col-sm-12">
                             <span class="file-element-label-info-taget">
-                            <span class="label label-default">Info Label</span>
+                              <span class="label label-default">Info Label</span>
                             </span>
-                          </span>
-                          <button class="btn btn-xs pull-right" aria-hidden="true" role="button" 
-                            data-toggle="collapse" data-target="#file-element-body" 
-                            aria-expanded="false" aria-controls="file-element-body">
-                          <span class="glyphicon glyphicon-option-horizontal"></span>
-                          </button>
-                        </div>
-                        <div class="panel-body collapse sub-panel" id="file-element-body">
-                          <table class="table table-responsive table-striped file-element-table">
-                            <tbody>
-                              <tr>
-                                <th>Patterns</th>
-                                <td class="file-element-name-target">File heading</td>
-                              </tr>
-                              <tr>
-                                <th>Files</th>
-                                <td>
+                          </div>
+                          <div class="col-sm-12 collapse" id="file-element-body">
+                            <ul class="list-group file-listing">
+                              <li class="row">
+                                <div class="col-sm-3">Patterns</div>
+                                <div class="col-sm-9 file-element-name-target">Some Pattern</div>
+                              </li>
+                              <li class="row">
+                                <div class="col-sm-3">Files</div>
+                                <div class="col-sm-9">
                                   <table class="file-element-filelist-container">
                                     <tr>
                                       <td>
@@ -203,23 +198,23 @@
                                       </td>
                                       <td>
                                         <button class="file-element-filelist-copy-target btn btn-default btn-xs copylinkbtn" 
-                                          data-clipboard-text="somepath">
-                                        <span class="glyphicon glyphicon-copy"></span>
+                                                data-clipboard-text="somepath">
+                                          <span class="glyphicon glyphicon-copy"></span>
                                         </button>
                                         <a class="file-element-filelist-open-target btn btn-default btn-xs" 
-                                          target="_blank" href="somepath">
-                                        <span class="glyphicon glyphicon-open-file"></span>
+                                           target="_blank" href="somepath">
+                                          <span class="glyphicon glyphicon-open-file"></span>
                                         </a>
                                       </td>
-                                    </tr>
+                                   </tr>
                                   </table>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div> <!-- file element -->
-                    </div> <!-- file element container -->
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div> <!-- modal body -->
                 </div>
               </div>

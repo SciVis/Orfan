@@ -57,13 +57,16 @@ li.info-row > div:first-child {
 	font-size: 14px; 
 	font-weight: bold;
 }
+ul.file-listing > li {
+	padding: 5px 0px 5px 0px;
+}
+
+.list-group {
+    margin-bottom: 0px;
+}
 
 .header-btn h4 {
 	margin: 2px;
-}
-
-.info-container-table th {
-	width: 15%;
 }
 
 .sub-panel {
@@ -94,6 +97,19 @@ li.info-row > div:first-child {
 	padding: 15px;
 }
 
+.thumbnail-div {
+	margin: 0px;
+	padding: 0px;
+}
+
+.thumbnail-div:first-of-type {
+	margin-right: 10px;
+}
+
+.thumbnail-div ~ .thumbnail-div {
+	margin-right: 10px;
+}
+
 .citations-container td:last-child {
 	width: 15%;
 }
@@ -112,6 +128,7 @@ li.info-row > div:first-child {
 .thumbnail {
 	margin-bottom: 0px;
 	border: 0px;
+	padding: 0px;
 }
 
 .thumbnail-preview {

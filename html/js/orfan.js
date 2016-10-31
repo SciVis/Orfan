@@ -369,9 +369,9 @@ function createModal(key, meta_data) {
 
 	// Update Files
 	if (meta_data["files"].length > 0) {
-		var fc = $(modal).find("#file-element-container").html(function() {
-			var file_elem = $(this).find(":first").clone(true);
-			$(this).empty();
+		var fc = $(modal).find("#info-container").html(function() {
+			var file_elem = $(this).find("#file-element").clone(true);
+			$(this).find("#file-element").remove();
 			for (var i=0; i < meta_data["files"].length; i++) {
 				var e = file_elem.clone(true);
 
