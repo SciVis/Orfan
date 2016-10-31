@@ -18,6 +18,11 @@ div.taglist-container {
     text-align: center;
 }
 
+span.modal-nav {
+    font-size: 1.3em;
+    margin: 0px 5px 0px 5px;
+}
+
 .navbar-margin {
     margin-top: 70px;
 }
@@ -43,6 +48,14 @@ div.taglist-container {
     width:100%;
 	padding: 5px;
  	border:0px solid transparent; /* this was 1px earlier */
+ 	background-color: rgb(245, 245, 245);
+}
+
+li.info-row { padding: 8px 0px 8px 0px; }
+li.info-row:nth-child(odd) { background: #f9f9f9; }
+li.info-row > div:first-child { 
+	font-size: 14px; 
+	font-weight: bold;
 }
 
 .header-btn h4 {

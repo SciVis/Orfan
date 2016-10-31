@@ -7,6 +7,10 @@ var tag_base;
 var active_tag_base;
 var counted_tag_base;
 
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 $(document).ready(function() {
 	// --- CLONE & SETUP REFERENCE BASE ELEMENTS FROM HTML ---
 	element_base = $("#element-base").clone();
@@ -69,7 +73,6 @@ const minimize_class_list = "col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
 const maximize_class_list = "col-xs-12";
 
 function minimizeThumbnails(jquery_obj) {
-	console.log(jquery_obj);
 	jquery_obj.show();
 	jquery_obj.removeClass(maximize_class_list);
 	jquery_obj.addClass(minimize_class_list);
@@ -269,11 +272,10 @@ function setupPath(elem, path) {
 				p = p + "/" + path_chunks[u];
 
 			$(e).attr("href", "#"+p);
-			$(e).html(path_chunks[i]);
-			if (i < path_chunks.length-1)
-				$(e).append("/");
-
+			$(e).html(path_chunks[i].capitalizeFirstLetter());
 			$(this).append(e);
+			if (i < path_chunks.length-1)
+				$(this).append(" / ");
 		}
 	});
 }
@@ -645,7 +647,7 @@ $(window).on('hashchange', function() {
 		for (var u=1; u <= i; u++)
 			p = p + "/" + path_chunks[u];
 
-		$('#breadcrumb').append("<li><a href='#"+p+"'>"+path_chunks[i]+"</a></li>");
+		$('#breadcrumb').append("<li><a href='#"+p+"'>"+path_chunks[i].capitalizeFirstLetter()+"</a></li>");
 	}
 
 	customFilterElements();
