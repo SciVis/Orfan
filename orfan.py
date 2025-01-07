@@ -6,24 +6,24 @@ import shutil
 missing_modules = {}
 try:
     import orfan
+    import orfan.scraper
 except ImportError:
     missing_modules['orfan'] = "main Orfan module missing"
 
-if len(missing_modules)>0: 
+if len(missing_modules) > 0:
     print("Error: Missing python modules:")
-    for k,v in missing_modules.items():
-        print("    {:20s} {}".format(k,v))    
+    for k, v in missing_modules.items():
+        print("    {:20s} {}".format(k, v))
     print("    To install run: 'pip3 install {}'".format(" ".join(missing_modules.keys())))
     exit()
 
 
-import orfan.scraper
-
 def mkdir(*path):
-    res = os.path.join(*path) 
+    res = os.path.join(*path)
     if not os.path.isdir(res):
         os.mkdir(res)
     return res
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -32,9 +32,9 @@ if __name__ == '__main__':
     )
 
     parser.add_argument('-p', '--path', type=str, action="store", dest="path",
-                        help='Path to data storage', default = "./Example")
-    parser.add_argument('-d', '--dest', type=str,  action="store", dest="dest",
-                       help='Destination dir of dataset gallery', default = "./html" )
+                        help='Path to data storage', default="./data")
+    parser.add_argument('-d', '--dest', type=str, action="store", dest="dest",
+                        help='Destination dir of dataset gallery', default="./html")
     args = parser.parse_args()
 
     meta, thumbnails, errors = orfan.scraper.scrape(args.path)
@@ -46,15 +46,14 @@ if __name__ == '__main__':
     with open(os.path.join(outputDir, "data.js"), 'w') as f:
         f.write("var data = ")
         f.write(json.dumps({
-            "datasets" : meta, 
-            "software" : software, 
-            "errors" : errors,
-            "datapath" : os.path.relpath(args.path, outputDir).replace(os.path.sep, "/")
+            "datasets": meta,
+            "software": software,
+            "errors": errors,
+            "datapath": os.path.relpath(args.path, outputDir).replace(os.path.sep, "/")
         }, indent=4))
 
     for thumbnail in thumbnails:
-        os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),  exist_ok=True)
+        os.makedirs(os.path.dirname(os.path.join(outputDir, "thumbnails", thumbnail)),
+                    exist_ok=True)
         shutil.copyfile(os.path.join(args.path, thumbnail),
                         os.path.join(outputDir, "thumbnails", thumbnail))
-
-

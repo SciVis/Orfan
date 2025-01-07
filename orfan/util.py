@@ -1,7 +1,7 @@
-def dictget(dct, *keys, failure = None):
+def dictget(dct, *keys, failure=None):
     for key in keys:
         if key in dct.keys():
             dct = dct[key]
-        else: 
+        else:
             return failure
     return dct
