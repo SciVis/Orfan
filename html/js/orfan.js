@@ -3,7 +3,6 @@
 // TEMPLATE BASE OBJECTS
 var element_base;
 var modal_base;
-var tag_base;
 var active_tag_base;
 var counted_tag_base;
 
@@ -12,15 +11,15 @@ String.prototype.capitalizeFirstLetter = function() {
 }
 
 $(document).ready(function() {
+	// --- FOOTER ---
+	$("#copyright-year").text(new Date().getFullYear());
+
 	// --- CLONE & SETUP REFERENCE BASE ELEMENTS FROM HTML ---
 	element_base = $("#element-base").clone();
 	$("#element-base").remove();
 
 	modal_base = $("#modal-base").clone();
 	$("#modal-base").remove();
-
-	tag_base = $("#tag-base").clone();
-	$("#tag-base").remove();
 
 	active_tag_base = $("#active-tag-base").clone();
 	$("#active-tag-base").remove();
@@ -40,17 +39,28 @@ $(document).ready(function() {
 	});
 
 	// Activate clipboard buttons
-	var clipboard = new Clipboard('.copylinkbtn');
+	// NOTE: clipboard.js v2 renamed its global export to ClipboardJS to avoid
+	// clashing with the native browser Clipboard API (window.Clipboard).
+	// The "container" option is required because these buttons live inside
+	// the Bootstrap modal: Bootstrap 5's focus-trap otherwise steals focus
+	// back from clipboard.js's temporary selection element (appended to
+	// <body> by default) before the copy can complete.
+	var clipboard = new ClipboardJS('.copylinkbtn', {
+		container: document.getElementById('modal')
+	});
 
 	// Setup modal functionality
-	$('#modal').on('show.bs.modal', function(event) {
+	// NOTE: Bootstrap 5 dropped its jQuery integration, so its custom events
+	// (e.g. "show.bs.modal") are dispatched as plain native events and must be
+	// bound with addEventListener rather than jQuery's dot-namespaced .on().
+	document.getElementById('modal').addEventListener('show.bs.modal', function(event) {
     	var modal_target = $(event.relatedTarget).attr("data-modal-target");
     	showModalTarget(modal_target)
 	});
 
 	// Minimize thumbnails when modal closes
-	$('#modal').on('hide.bs.modal', function () {
-		var thumbnail_divs = $(this).find(".modal-content:visible").find("#thumbnail-container").find(".thumbnail-div");
+	document.getElementById('modal').addEventListener('hide.bs.modal', function () {
+		var thumbnail_divs = $(this).find(".modal-content:visible").find(".thumbnail-container").find(".thumbnail-div");
 	    minimizeThumbnails(thumbnail_divs);
 	});
 
@@ -69,8 +79,8 @@ $(document).ready(function() {
 	});*/
 });
 
-const minimize_class_list = "col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
-const maximize_class_list = "col-xs-12";
+const minimize_class_list = "col-4 col-sm-4 col-md-3 col-lg-3 col-xl-3";
+const maximize_class_list = "col-12";
 
 function minimizeThumbnails(jquery_obj) {
 	jquery_obj.show();
@@ -92,7 +102,7 @@ function showModalTarget(target) {
 	if (q.length > 0)
 		q.show();
 	else
-		$("#modal").modal('hide');
+		bootstrap.Modal.getOrCreateInstance(document.getElementById('modal')).hide();
 }
 
 function onTagClick(event) {
@@ -105,7 +115,7 @@ function onTagClick(event) {
 	if ($all_selected_matching_tags.length > 0) return;
 
 	var new_elem = $(this).clone();
-	$(new_elem).html("<span class='glyphicon glyphicon-remove'></span> " + tag);
+	$(new_elem).html("<span class='bi bi-x'></span> " + tag);
 
 	$(new_elem).off('click');
 	$(new_elem).on('click', function(event) {
@@ -260,7 +270,7 @@ function generateId(key) {
 }
 
 function setupPath(elem, path) {
-	$(elem).find("#path").html(path);
+	$(elem).find(".element-path").html(path);
 	$(elem).find(".path-container").html(function() {
 		var path_elem = $(this).find(":first").clone();
 		$(this).empty();
@@ -356,11 +366,11 @@ function createModal(key, meta_data) {
 		});
 
 		// Set unique ID for collapse target
-		var collapse_button = $(modal).find(".btn[data-target='#citations-container-div']");
+		var collapse_button = $(modal).find(".btn[data-bs-target='#citations-container-div']");
 		var collapse_target = $(modal).find("#citations-container-div");
 		var new_id = id + "-citations-container";
 
-		collapse_button.attr("data-target", "#" + new_id);
+		collapse_button.attr("data-bs-target", "#" + new_id);
 		collapse_target.attr("id", new_id)
 	}
 	else {
@@ -369,7 +379,7 @@ function createModal(key, meta_data) {
 
 	// Update Files
 	if (meta_data["files"].length > 0) {
-		var fc = $(modal).find("#info-container").html(function() {
+		var fc = $(modal).find(".info-container").html(function() {
 			var file_elem = $(this).find("#file-element").clone(true);
 			$(this).find("#file-element").remove();
 			for (var i=0; i < meta_data["files"].length; i++) {
@@ -383,8 +393,10 @@ function createModal(key, meta_data) {
 				);
 
 				// set the name pattern
+				var names;
 				if (meta_data["files"][i]["name"] == undefined) {
 					meta_data["files"][i]["name"] = "";
+					names = "";
 				} else if (meta_data["files"][i]["name"] instanceof Array) {
 					names = meta_data["files"][i]["name"].join(", ");
 				} else {
@@ -447,11 +459,11 @@ function createModal(key, meta_data) {
 				});
 
 				// Set unique ID for collapse target
-				var file_collapse_button = $(e).find(".btn[data-target='#file-element-body']");
+				var file_collapse_button = $(e).find(".btn[data-bs-target='#file-element-body']");
 				var file_collapse_target = $(e).find("#file-element-body");
 				var new_id = id + "-file-element-body-" + i;
 
-				file_collapse_button.attr("data-target", "#" + new_id);
+				file_collapse_button.attr("data-bs-target", "#" + new_id);
 				file_collapse_target.attr("id", new_id);
 
 				$(this).append(e);
@@ -474,8 +486,8 @@ function createModal(key, meta_data) {
 	$(modal).find("[data-action='next-modal']").on("click", function() {
 		//$(".modal").modal("hide");
 		// TODO: Simplify this query?
-		var next_modal_id = $("#"+element_id).nextAll(":visible").first().find("[data-toggle='modal']").attr("data-modal-target");
-		var thumbnail_divs = $(modal).find("#thumbnail-container").find(".thumbnail-div");
+		var next_modal_id = $("#"+element_id).nextAll(":visible").first().find("[data-bs-toggle='modal']").attr("data-modal-target");
+		var thumbnail_divs = $(modal).find(".thumbnail-container").find(".thumbnail-div");
 		minimizeThumbnails(thumbnail_divs);
 		showModalTarget(next_modal_id);
 		//$(next_modal_id).modal("show");
@@ -484,15 +496,15 @@ function createModal(key, meta_data) {
 	$(modal).find("[data-action='prev-modal']").on("click", function() {
 		//$(".modal").modal("hide");
 		// TODO: Simplify this query?
-		var prev_modal_id = $("#"+element_id).prevAll(":visible").first().find("[data-toggle='modal']").attr("data-modal-target");
-		var thumbnail_divs = $(modal).find("#thumbnail-container").find(".thumbnail-div");
+		var prev_modal_id = $("#"+element_id).prevAll(":visible").first().find("[data-bs-toggle='modal']").attr("data-modal-target");
+		var thumbnail_divs = $(modal).find(".thumbnail-container").find(".thumbnail-div");
 		minimizeThumbnails(thumbnail_divs);
 		showModalTarget(prev_modal_id);
 		//(prev_modal_id).modal("show");
 	});
 
 	// Setup functionality of thumbnails
-	$(modal).find("#thumbnail-container").each(function() {
+	$(modal).find(".thumbnail-container").each(function() {
 		var thumbnail_container = $(this);
 		var thumbnail_divs = $(this).find(".thumbnail-div");
 
@@ -502,7 +514,7 @@ function createModal(key, meta_data) {
 			var this_thumbnail_div = $(this).closest(".thumbnail-div");
 
 			// TODO: This could possibly be optimized to minimize state changes within elements
-			if (this_thumbnail_div.hasClass("col-xs-12")) {
+			if (this_thumbnail_div.hasClass("col-12")) {
 				minimizeThumbnails(thumbnail_divs);
 			}
 			else {
@@ -555,7 +567,7 @@ function createElement(key, meta_data) {
 	// --- MODALS ---
 	// Update modal targets
 	const modal_id = "modal-" + id; 
-	$(elem).find("[data-toggle='modal']").attr("data-modal-target", "#"+modal_id);
+	$(elem).find("[data-bs-toggle='modal']").attr("data-modal-target", "#"+modal_id);
 
 	$(elem).show();
 	return elem;
@@ -577,7 +589,7 @@ function getVisibleElementTagsMinusActiveTags() {
 }
 
 function getVisibleElementTags() {
-	return extractTagsAsStrings($("#element-container").find(".element:visible").find("#element-tag-container"));
+	return extractTagsAsStrings($("#element-container").find(".element:visible").find(".element-tag-container"));
 }
 
 function getActiveTags() {
@@ -620,8 +632,8 @@ function customFilterElements() {
 
 	$(".element").filter(function() {
 		// Get tags for this element
-		var element_tag_array = extractTagsAsStrings($(this).find("#element-tag-container"));
-		var q1 = $(this).find("#path:contains('"+path+"')").length > 0;
+		var element_tag_array = extractTagsAsStrings($(this).find(".element-tag-container"));
+		var q1 = $(this).find(".element-path:contains('"+path+"')").length > 0;
 		var q2 = filterTags(element_tag_array, filter_tag_array);
 		return q1 && q2;
 	}).show();
@@ -647,7 +659,7 @@ $(window).on('hashchange', function() {
 		for (var u=1; u <= i; u++)
 			p = p + "/" + path_chunks[u];
 
-		$('#breadcrumb').append("<li><a href='#"+p+"'>"+path_chunks[i].capitalizeFirstLetter()+"</a></li>");
+		$('#breadcrumb').append("<li class='breadcrumb-item'><a href='#"+p+"'>"+path_chunks[i].capitalizeFirstLetter()+"</a></li>");
 	}
 
 	customFilterElements();

@@ -2,56 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Orfan</title>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap XL extra -->
-    <link href="css/bootstrapxl.css" rel="stylesheet">
+    <!-- Bootstrap Icons (replaces the discontinued Glyphicons) -->
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom styles our application -->
     <link href="css/orfan.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body id="body">
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          </button>
-          <div class="nav navbar-nav navbar-left">
-            <ul class="breadcrumb" id="breadcrumb">
-              <li class="active"><a href="#">Orfan</a></li>
-            </ul>
-          </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container-fluid">
+        <div class="nav navbar-brand navbar-nav navbar-left">
+          <ul class="breadcrumb" id="breadcrumb">
+            <li class="breadcrumb-item active"><a href="#">Orfan</a></li>
+          </ul>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <div class="navbar-form navbar-right">
-            <button class="btn btn-default sort" data-sort="path">
-              Sort by path
-            </button>
-            <button class="btn btn-default sort" data-sort="title">
-              Sort by name
-            </button>
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-              <span class="glyphicon glyphicon-search"></span>
-              </span>
-              <input type="text" class="form-control search" placeholder="Filter" aria-describedby="basic-addon1">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapseId" aria-controls="navbarCollapseId" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbarCollapseId" class="navbar-collapse collapse">
+          <ul class="navbar-nav ms-auto mb-2">
+            <li class="nav-item">         
+              <button class="btn btn-secondary sort m-1" data-sort="path">
+                Sort by path
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-secondary sort m-1" data-sort="title">
+                Sort by name
+              </button>
+            </li>
+          <li class="nav-item"></li>
+          <div class="d-flex justify-content-end m-1">
+            <span class="input-group-text">
+            <span class="bi bi-search"></span>
+            </span>
+            <input type="text" class="form-control search" placeholder="Filter" aria-describedby="basic-addon1">
             </div>
           </div>
+          </li>
         </div>
+          </ul>
         <!--/.navbar-collapse -->
       </div>
     </nav>
@@ -59,31 +57,31 @@
       <div class="row content">
         <div class="col-sm-2 sidenav navbar-margin">
           <div class="taglist-container" id="active-tag-container">
-            <button type="button" id="active-tag-base" 
-              class="tag btn btn-info btn-xs" tag='Tag1'>
-            <span class='glyphicon glyphicon-remove'></span>
-            <span id="tag-caption-target">Tag1</span>
+            <button type="button" id="active-tag-base" class="tag btn btn-primary btn-xs m-0" tag='Tag1'>
+              <span class='bi bi-x'></span>
+              <span id="tag-caption-target">Tag1</span>
             </button>
           </div>
           <br>
           <div class="taglist-container" id="taglists-taglistlist-container">
-            <button type="button" id="counted-tag-base" 
-              class="tag btn btn-info btn-xs" tag='Tag1'>
-            <span class='badge' id="count-target">1</span> 
-            <span id="caption-target">Tag1</span>
+            <button type="button" id="counted-tag-base" class="tag btn btn-primary btn-xs m-0" tag='Tag1'>
+              <span class='badge text-bg-light text-primary' id="count-target">1</span> 
+              <span id="caption-target">Tag1</span>
             </button>
           </div>
         </div>
         <div class="col-sm-10 text-left">
           <!--<div class="" id="modal-container">-->
             <div class="modal fade" role="dialog" id="modal"> <!-- Modal -->
-              <div class="modal-dialog" id="modal-container">
+              <div class="modal-dialog modal-lg" id="modal-container">
                 <div class="modal-content" id="modal-base">
                   <div class="modal-header">
-                    <div class="modal-control-panel">
-                      <button type="button" class="close" data-dismiss="modal"><span class="modal-nav glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                      <button type="button" class="close" data-action="next-modal"><span class="modal-nav glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
-                      <button type="button" class="close" data-action="prev-modal"><span class="modal-nav glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+                    <div class="modal-control-panel position-absolute top-0 start-0 m-2">
+                      <button type="button" class="btn btn-link modal-nav p-0" data-bs-dismiss="modal"  aria-label="Close"><span class="bi bi-x-lg" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="modal-control-panel position-absolute top-0 end-0 m-2" >
+                      <button type="button" class="btn btn-link modal-nav p-0" data-action="prev-modal" aria-label="Previous dataset"><span class="bi bi-chevron-left" aria-hidden="true"></span></button>
+                      <button type="button" class="btn btn-link modal-nav p-0" data-action="next-modal" aria-label="Next dataset"><span class="bi bi-chevron-right" aria-hidden="true"></span></button>
                     </div>
                     <h4 class="modal-title title text-center">This is the modal view</h4>
                     <div class='path-container'>
@@ -92,14 +90,14 @@
                       <a href="#">subsubfolder/</a>
                     </div>
                     <div class='tag-container'>
-                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag1'>Tag1</button>
-                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
-                      <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
+                      <button type="button" class="tag btn btn-primary btn-xs p-1 py-0 m-0" tag='Tag1'>Tag1</button>
+                      <button type="button" class="tag btn btn-primary btn-xs p-1 py-0 m-0" tag='Tag2'>Tag2</button>
+                      <button type="button" class="tag btn btn-primary btn-xs p-1 py-0 m-0" tag='Tag3'>Tag3</button>
                     </div>
                   </div>
                   <div class="modal-body">
-                    <div class="panel-body row thumbnail-container" id="thumbnail-container">
-                      <div class='col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 thumbnail-div'>
+                    <div class="card-body row thumbnail-container">
+                      <div class='col-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 thumbnail-div'>
                         <div class='thumbnail'>
                           <a href="img/no_img.png" data-footer="This is the thumbnail description" data-gallery="id-will-be-used-here">
                           <img class='img-fluid' src='img/no_img.png' alt=''>
@@ -110,8 +108,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="panel-body sub-panel">
-                      <ul class="list-group" id="info-container">
+                    <div class="card-body sub-panel">
+                      <ul class="list-group info-container">
                         <li class="list-group-item row info-row">
                           <div class="col-sm-3">Description</div>
                           <div class="col-sm-9 description-target">this is a description</div>
@@ -139,7 +137,7 @@
                         <li class="list-group-item row info-row">
                           <div class="col-sm-3">Link</div>
                           <div class="col-sm-9 crop">
-                            <a class='link-target' href='' target='_blank'>this is a link</a>
+                            <a class='link-target' href='' target='_blank' rel="noopener noreferrer">this is a link</a>
                           </div>
                         </li>
                         <li class="list-group-item row info-row">
@@ -149,17 +147,18 @@
                         <!--- Citation Panel -->
                         <li class='list-group-item row info-row citations-panel' id='citations-panel'>
                           <div class="col-sm-12">Citations
-                            <button class="btn btn-xs pull-right" aria-hidden="true" role="button" 
-                                    data-toggle="collapse" data-target="#citations-container-div" 
-                                    aria-expanded="false" aria-controls="citations-container-div">
-                              <span class="glyphicon glyphicon-option-horizontal"></span>
+                            <button class="btn btn-sm float-end" 
+                                    data-bs-toggle="collapse" data-bs-target="#citations-container-div" 
+                                    aria-expanded="false" aria-controls="citations-container-div"
+                                    aria-label="Toggle citations">
+                              <span class="bi bi-three-dots" aria-hidden="true"></span>
                             </button>
                           </div>
                           <div class="col-sm-12 collapse" id="citations-container-div">
                             <ul class="citations-container-table">
                               <li>
                                 <span class="payload-target">@10.1109/TVCG.2006.146</span>
-                                <span class="pull-right badge type-target">DOI</span>
+                                <span class="float-end badge type-target">DOI</span>
                               </li>
                             </ul>
                           </div>
@@ -168,15 +167,16 @@
                         <li class='list-group-item row info-row citations-panel' id='file-element'>
                           <div class="col-sm-12">
                             <span class="file-element-description-target">Some description</span>
-                            <button class="btn btn-xs pull-right" aria-hidden="true" role="button" 
-                                    data-toggle="collapse" data-target="#file-element-body" 
-                                    aria-expanded="false" aria-controls="file-element-body">
-                              <span class="glyphicon glyphicon-option-horizontal"></span>
+                            <button class="btn btn-sm float-end" 
+                                    data-bs-toggle="collapse" data-bs-target="#file-element-body" 
+                                    aria-expanded="false" aria-controls="file-element-body"
+                                    aria-label="Toggle file list">
+                              <span class="bi bi-three-dots" aria-hidden="true"></span>
                             </button>
                           </div>
                           <div class="col-sm-12">
                             <span class="file-element-label-info-taget">
-                              <span class="label label-default">Info Label</span>
+                              <span class="badge text-bg-secondary">Info Label</span>
                             </span>
                           </div>
                           <div class="col-sm-12 collapse" id="file-element-body">
@@ -197,13 +197,13 @@
                                         <span class="file-element-filelist-size-target">120 B</span>
                                       </td>
                                       <td>
-                                        <button class="file-element-filelist-copy-target btn btn-default btn-xs copylinkbtn" 
+                                        <button class="file-element-filelist-copy-target btn btn-outline-secondary btn-sm copylinkbtn" 
                                                 data-clipboard-text="somepath">
-                                          <span class="glyphicon glyphicon-copy"></span>
+                                          <span class="bi bi-clipboard" aria-hidden="true"></span>
                                         </button>
-                                        <a class="file-element-filelist-open-target btn btn-default btn-xs" 
-                                           target="_blank" href="somepath">
-                                          <span class="glyphicon glyphicon-open-file"></span>
+                                        <a class="file-element-filelist-open-target btn btn-outline-secondary btn-sm" 
+                                           target="_blank" rel="noopener noreferrer" href="somepath">
+                                          <span class="bi bi-box-arrow-up-right" aria-hidden="true"></span>
                                         </a>
                                       </td>
                                    </tr>
@@ -221,12 +221,12 @@
             </div>
           <!--</div>-->
           <div class="list grid navbar-margin row" id="element-container">
-            <div class="element item col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2" id='element-base'>
-              <div class="path" id='path' hidden>Base/Subfolder/subsubfolder/</div>
-              <div class='panel panel-default'>
-                <div class='panel-heading'>
-                  <button class='btn btn-default header-btn' data-toggle="modal" 
-                          data-target="#modal" data-modal-target="modal-base">
+            <div class="element item col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 col-xxl-2" id='element-base'>
+              <div class="path element-path" hidden>Base/Subfolder/subsubfolder/</div>
+              <div class='card w-150'>
+                <div class='card-header'>
+                  <button class='btn btn-outline-secondary header-btn' data-bs-toggle="modal" 
+                          data-bs-target="#modal" data-modal-target="modal-base">
                     <h4 class="title crop">This is the element view</h4>
                   </button>
                   <div class='path-container crop'>
@@ -234,15 +234,15 @@
                     <a href="#">Subfolder</a> / 
                     <a href="#">subsubfolder</a>
                   </div>
-                  <div class='tag-container crop' id="element-tag-container">
-                    <button type="button" class="tag btn btn-info btn-xs" id="tag-base" tag='Tag1'>Tag1</button>
-                    <button type="button" class="tag btn btn-info btn-xs" tag='Tag2'>Tag2</button>
-                    <button type="button" class="tag btn btn-info btn-xs" tag='Tag3'>Tag3</button>
+                  <div class='tag-container crop element-tag-container'>
+                    <button type="button" class="tag btn btn-primary btn-xs p-1 py-0 m-0" tag='Tag1'>Tag1</button>
+                    <button type="button" class="tag btn btn-primary btn-xs p-1 py-0 m-0" tag='Tag2'>Tag2</button>
+                    <button type="button" class="tag btn btn-primary btn-xs p-1 py-0 m-0" tag='Tag3'>Tag3</button>
                   </div>
                 </div>
-                <div class="thumbnail-preview panel-body" >
+                <div class="thumbnail-preview card-body" >
                   <div class="thumbnail">
-                    <a href="#" data-toggle="modal" data-target="#modal" data-modal-target="modal-base">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal" data-modal-target="modal-base">
                     <img class="img-fluid" src="img/no_img.png" alt="">
                     </a>
                   </div>
@@ -250,12 +250,12 @@
               </div>
             </div>
           </div>
-          <div class='panel panel-default' id='error-container-elem'>
-            <div class="panel-heading">
-              <button class="btn btn-xs pull-right" aria-hidden="true" role="button" data-toggle="collapse" data-target="#error-container" aria-expanded="false" aria-controls="error-container"><span class="glyphicon glyphicon-option-horizontal"></span></button>
+          <div class='card' id='error-container-elem'>
+            <div class="card-header">
+              <button class="btn btn-sm float-end" data-bs-toggle="collapse" data-bs-target="#error-container" aria-expanded="false" aria-controls="error-container" aria-label="Toggle errors"><span class="bi bi-three-dots" aria-hidden="true"></span></button>
               <span>Errors</span>
             </div>
-            <div class="panel-body collapse error-container" id='error-container'>
+            <div class="card-body collapse error-container" id='error-container'>
               <ol id="errors-errorlist-container">
                 <li><span class="errors-errorlist-error-target">error</span></li>
               </ol>
@@ -266,13 +266,13 @@
     </div>
     <!--/.container-->
     <footer class="container-fluid text-center">
-      <p>&copy; 2016 SciVis Group Norrköping</p>
+      <p>&copy; <span id="copyright-year">2026</span> SciVis Group Norrköping</p>
     </footer>
     <!-- Javascripts
       ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="js/list.min.js"></script>
     <script type="text/javascript" src="js/clipboard.min.js"></script>
     <script type="text/javascript" src="data.js"></script>
