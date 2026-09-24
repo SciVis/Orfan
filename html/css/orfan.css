@@ -1,5 +1,19 @@
+a {
+    text-decoration-line: none;
+}
+
+.btn-xs {
+    --bs-btn-padding-y: 1px;
+    --bs-btn-padding-x: 5px;
+    --bs-btn-font-size: 12px;
+    --bs-btn-border-radius: 3px;
+}
+
 .nav .breadcrumb {
     margin: 0 7px;
+    /* Make the "Orfan" title / path breadcrumb stand out as a page title. */
+    font-size: 24px;
+    font-weight: 700;
 }
 
 @media (min-width: 768px) {
@@ -9,12 +23,35 @@
     }
 }
 
+.breadcrumb {
+    align-items: center;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "/";
+    color: #ccc;
+    float: none;
+    padding-left: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav .breadcrumb li + li::before {
+    font-size: 18px;
+}
+
 .element-title {
 	font-size: 16px;
 }
 
 div.taglist-container {
-    line-height: 200%;
+    line-height: 130%;
     text-align: left;
 }
 
@@ -24,11 +61,11 @@ span.modal-nav {
 }
 
 .navbar-margin {
-    margin-top: 70px;
+    margin-top: 100px;
 }
 
 .element-container {
-	margin-top: 70px;
+	margin-top: 100px;
 }
 
 .element-tag-container > * {
@@ -91,6 +128,13 @@ ul.file-listing > li {
 
 .modal-control-panel {
     float: right;
+}
+
+/* Bootstrap 5 turned .modal-header into a flex container by default; this
+   app relies on the original block layout to stack the control panel,
+   title, path breadcrumb and tag list vertically. */
+.modal-header {
+	display: block;
 }
 
 .thumbnail-container {
